@@ -1,0 +1,34 @@
+﻿@model IEnumerable<AzureMediaPortal.Models.MediaElement>
+@{
+    ViewBag.Title = "Home";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+            <p>
+               ***About Project***
+            </p>
+        </div>
+    </section>
+}
+
+<!--<ol class="round">
+    <li class="one">
+        <h5>Register/Login</h5>
+        Visit the @Html.ActionLink("Registration Page", "Register", "Account") to register. If you are
+        already registered, @Html.ActionLink("Login Here", "Login", "Account", new { returnUrl="Media" })
+    </li>
+
+    <li class="two">
+        <h5>Upload</h5>
+        "My Video Portal" makes it easy to upload your @Html.ActionLink("personal Videos", "Index", "Media")        
+    </li>
+
+    <li class="three">
+        <h5>View</h5>
+        One uploaded you can keep @Html.ActionLink("your videos", "Index", "Media")  to yourself or make them public and share them with the world.
+    </li>
+</ol>-->

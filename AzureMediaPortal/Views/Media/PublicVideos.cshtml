@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AzureMediaPortal.Models.MediaElement>
+
+@{
+    ViewBag.Title = "Public Videos";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h2>Welcome to Watch and Learn. View and upload instructional exercise videos to aid in your fitness goals.</h2>
+            </hgroup>
+            <p>
+                The below videos are public and can be watched without user login. If you wish to share a video please @Html.ActionLink("Login", "Login", "Account", new { returnUrl = "Media" }) or @Html.ActionLink("Register", "Register", "Account") if you do not already have an account.
+            </p>
+        </div>
+    </section>
+}
+<h2>Public Videos</h2>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        
+        
+        <th></th>
+    </tr>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.ActionLink(@item.Title, "WatchPublic", new { id = item.Id })
+                
+            </td>
+        </tr>
+    }
+</table>
