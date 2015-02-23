@@ -19,9 +19,7 @@ using Microsoft.WindowsAzure.Storage.Auth;
 
 namespace AzureMediaPortal.Controllers
 {
-    //hdhdhd
-    //new comment
-    //mn
+    
     public class MediaController : Controller
     {
         private AzureMediaPortalContext db = new AzureMediaPortalContext();
