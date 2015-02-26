@@ -9,7 +9,7 @@ namespace AzureMediaPortal.Models {
 
         public string CommentText { get; set; }
 
-        public System.DateTime CommentTime { get; set; }
+        public System.DateTime CommentTime { get; set;}
 
         public UserProfile UserProfile { get; set; }
     }
