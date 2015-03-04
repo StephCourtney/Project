@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "My Video List";
 }
-<!--comment-->
+
 <h2>My Videos</h2>
 
 <table>
@@ -14,8 +14,12 @@
         <th>
             @Html.DisplayNameFor(model => model.IsPublic)
         </th>
-        <th></th>
+       
     </tr>
+    <form action="Upload">
+        <input type="image" title="Upload new video" src="~/Images/upload.png" style="border:none; width:40px; height:40px; float:right;" />
+    </form>  
+    
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -27,11 +31,10 @@
         <td>
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
+        
     </tr>
 }
 </table>
 
 
-<form action="Upload">
-    <input type="image" src="~/Images/upload.png" style="border:none"/> 
-</form>
+
