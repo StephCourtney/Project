@@ -51,6 +51,7 @@ namespace AzureMediaPortal.Controllers
         {
             if (ModelState.IsValid)
             {
+                comment.UserID = User.Identity.Name;
                 db.Comments.Add(comment);
                 db.SaveChanges();
                 return RedirectToAction("Index");

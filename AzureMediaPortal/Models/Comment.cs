@@ -7,10 +7,13 @@ namespace AzureMediaPortal.Models {
     public class Comment {
         public int CommentID { get; set; }
 
-        public string CommentText { get; set; }
+        public String UserID { get; set; }
 
-        public System.DateTime CommentTime { get; set;}
+        public String CommentText { get; set; }
 
-        public UserProfile UserProfile { get; set; }
+        private String commentTime;
+
+        public String CommentTime { get { return commentTime; } set { this.commentTime = DateTime.Now.ToString("dd MMM yyyy"); } }
+        
     }
 }

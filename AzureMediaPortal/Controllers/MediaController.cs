@@ -33,7 +33,7 @@ namespace AzureMediaPortal.Controllers
             return View(db.MediaElements.Where(m => m.UserId == User.Identity.Name).ToList());
         }
         
-        //TODO: make a view for public videos, set as home view
+        
         public ActionResult PublicVideos() {
             return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
         }

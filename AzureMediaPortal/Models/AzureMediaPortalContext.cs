@@ -12,5 +12,7 @@ namespace AzureMediaPortal.Models
         public DbSet<MediaElement> MediaElements { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
+
+        
     }
 }
