@@ -11,9 +11,8 @@ namespace AzureMediaPortal.Models {
 
         public String CommentText { get; set; }
 
-        private String commentTime;
+        public String CommentTime { get; set; }
 
-        public String CommentTime { get { return commentTime; } set { this.commentTime = DateTime.Now.ToString("dd MMM yyyy"); } }
-        
+        public int VideoID { get; set; }
     }
 }

@@ -52,6 +52,8 @@ namespace AzureMediaPortal.Controllers
             if (ModelState.IsValid)
             {
                 comment.UserID = User.Identity.Name;
+                comment.CommentTime = DateTime.Now.ToString("dd MMM yyyy HH:mm:ss");
+                
                 db.Comments.Add(comment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
