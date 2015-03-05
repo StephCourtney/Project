@@ -13,6 +13,6 @@ namespace AzureMediaPortal.Models {
 
         public String CommentTime { get; set; }
 
-        public int VideoID { get; set; }
+        public int PostID { get; set; }
     }
 }

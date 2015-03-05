@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using AzureMediaPortal.Models;
-using System.Threading.Tasks;
-using System.IO;
+﻿using AzureMediaPortal.Models;
 using Microsoft.WindowsAzure.MediaServices.Client;
 using Microsoft.WindowsAzure.Storage;
-using System.Configuration;
-using System.Globalization;
-using System.Text;
+using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
-using Microsoft.WindowsAzure.Storage.Auth;
+using System;
+using System.Configuration;
+using System.Data.Entity;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
 
 namespace AzureMediaPortal.Controllers
 {
@@ -97,12 +94,11 @@ namespace AzureMediaPortal.Controllers
             }
         }
 
-        //generate the streamingurl and locator for the asset and, at the moment only works with mp4
+        //generate the streamingurl and locator for the asset, at the moment only works with mp4
         [Authorize]
         private string GetStreamingUrl(string assetId)
         {
-            CloudMediaContext context = new CloudMediaContext(ConfigurationManager.AppSettings["MediaAccountName"],
-                ConfigurationManager.AppSettings["MediaAccountKey"]);
+            CloudMediaContext context = new CloudMediaContext(ConfigurationManager.AppSettings["MediaAccountName"], ConfigurationManager.AppSettings["MediaAccountKey"]);
 
             var daysForWhichStreamingUrlIsActive = 365;
             var streamingAsset = context.Assets.Where(a => a.Id == assetId).FirstOrDefault();
