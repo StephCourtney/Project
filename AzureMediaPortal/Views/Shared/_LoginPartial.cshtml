@@ -3,7 +3,9 @@
         Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
             @Html.AntiForgeryToken()
-            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            <form action="javascript:document.getElementById('logoutForm').submit()">
+                <input type="image" title="Log off" src="~/Images/logout.png" style="border:none; width:40px; height:40px; float:right;" />
+            </form>
         }
     </text>
 } else {

@@ -37,7 +37,6 @@ namespace AzureMediaPortal.Controllers
         public ActionResult PublicVideos() {
             return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
         }
-
         
         // GET: /Media/Details/
         //Return the selected media element and show details 
