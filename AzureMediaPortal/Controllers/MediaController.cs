@@ -76,6 +76,7 @@ namespace AzureMediaPortal.Controllers
         }
 
         //get the metadata and save it with the new element
+        //TODO: Save videoId... etc
         [Authorize]
         [HttpPost]
         public JsonResult Save(MediaElement mediaelement)
@@ -84,6 +85,8 @@ namespace AzureMediaPortal.Controllers
             {
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
+                Post vp = new Post { UserID = User.Identity.Name, MessageBody = "New Message" };
+                mediaelement.VideoPost = vp;
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
                 return Json(new { Saved = true, StreamingUrl =  mediaelement.FileUrl});

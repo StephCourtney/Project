@@ -16,12 +16,17 @@
         @Html.HiddenFor(model => model.FileUrl, new { id = "fileUrl" })
         @Html.HiddenFor(model => model.UserId)
        
-      
-    
     </fieldset>
 }
 <div id="videoPlayer">
 </div>
+<div>
+    @*TODO: get text to display for message body*@
+    @Html.LabelFor(Model => Model.VideoPost.MessageBody)
+   
+    @Html.DisplayTextFor(Model => Model.VideoPost.MessageBody)
+</div>
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
