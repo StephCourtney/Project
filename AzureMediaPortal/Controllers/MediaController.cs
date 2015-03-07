@@ -241,7 +241,7 @@ namespace AzureMediaPortal.Controllers
         [HttpPost]
         public ActionResult SetMetadata(int blocksCount, string fileName, long fileSize) {
             //remove hardcoded value at later stage
-            var container = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=walblob;AccountKey=cP3+8Y87xDlW1fUpCh1Q++EyLhavKA3EIFGWvHLhVYVJ/2K42402GP+8Fhh7GEE0nyzx+KQdPLcASbnRE7bb/Q==");
+            var container = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=fitvidsblob;AccountKey=XeSJX2R51EB2UIGdIGs4ckoibI3/9tnSBCaF8QfLouZ2fAtjbJS+pPoApJE9+k0cpCeFXfw2ImdqwOF+kovIUQ==");
             var cb = container.CreateCloudBlobClient().GetContainerReference("temporary-media");
             cb.CreateIfNotExists();
             var fileToUpload = new CloudFile() {
