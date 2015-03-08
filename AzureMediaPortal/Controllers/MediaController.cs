@@ -6,6 +6,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using System;
 using System.Configuration;
+using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.IO;
@@ -75,6 +76,7 @@ namespace AzureMediaPortal.Controllers
             return View(mediaelement);
         }
 
+
         //get the metadata and save it with the new element
         //TODO: Save videoId... etc
         [Authorize]
@@ -85,7 +87,7 @@ namespace AzureMediaPortal.Controllers
             {
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
-                Post vp = new Post { UserID = User.Identity.Name, MessageBody = "New Message" };
+                Post vp = new Post { UserID = User.Identity.Name, VideoID = mediaelement.Id, MessageBody = "Test" };
                 mediaelement.VideoPost = vp;
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
@@ -106,8 +108,7 @@ namespace AzureMediaPortal.Controllers
             var daysForWhichStreamingUrlIsActive = 365;
             var streamingAsset = context.Assets.Where(a => a.Id == assetId).FirstOrDefault();
 
-            IAccessPolicy accessPolicy =
-                accessPolicy = context.AccessPolicies.Create(streamingAsset.Name, TimeSpan.FromDays(daysForWhichStreamingUrlIsActive),
+            IAccessPolicy accessPolicy = context.AccessPolicies.Create(streamingAsset.Name, TimeSpan.FromDays(daysForWhichStreamingUrlIsActive),
                                      AccessPermissions.Read | AccessPermissions.List);
             
             string streamingUrl = string.Empty;

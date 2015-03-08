@@ -14,21 +14,21 @@
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.AssetId)
         @Html.HiddenFor(model => model.FileUrl, new { id = "fileUrl" })
-        @Html.HiddenFor(model => model.UserId)
-       
+        @Html.HiddenFor(model => model.UserId)  
     </fieldset>
 }
-<div id="videoPlayer">
-</div>
-<div>
-    @*TODO: get text to display for message body*@
-    @Html.LabelFor(Model => Model.VideoPost.MessageBody)
-   
-    @Html.DisplayTextFor(Model => Model.VideoPost.MessageBody)
-</div>
+
+<div id="videoPlayer"></div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
+</div>
+<div>
+    @*TODO: get text to display for message body*@
+    @Html.ValueFor(Model => Model.VideoPost.MessageBody)
+    
+    @Html.LabelFor(Model => Model.VideoPost.UserID)
+
 </div>
 @section Scripts {
     <script src="~/Scripts/playerframework.min.js"></script>
