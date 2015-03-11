@@ -11,6 +11,6 @@ namespace AzureMediaPortal.Models
         public int VideoID { get; set; }
         public string UserID { get; set; }
         public string MessageBody { get; set; }
-        public IEnumerable<Comment> Replies { get; set; }
+        public List<Comment> Replies { get; set; }
     }
 }

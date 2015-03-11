@@ -5,6 +5,7 @@ using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
@@ -67,7 +68,9 @@ namespace AzureMediaPortal.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 mediaelement.UserId = User.Identity.Name;
+               
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -87,8 +90,9 @@ namespace AzureMediaPortal.Controllers
             {
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
-                //Post vp = new Post { UserID = User.Identity.Name, MessageBody = "Test" };
-                //mediaelement.VideoPost.Add();
+                mediaelement.VideoPost = new List<Post>();
+                Post vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "Test2" };
+                mediaelement.VideoPost.Add(vp);
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
                 return Json(new { Saved = true, StreamingUrl =  mediaelement.FileUrl});
@@ -160,6 +164,8 @@ namespace AzureMediaPortal.Controllers
 
         public ActionResult WatchPublic(int id = 0) {
             MediaElement mediaelement = db.MediaElements.Find(id);
+            List<Post> posts = new List<Post>();
+           // var post = mediaelement.VideoPost;
             if (mediaelement == null) {
                 return HttpNotFound();
             }

@@ -24,10 +24,12 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 <div>
+    @Html.LabelFor(Model => Model.VideoPost)
     @*TODO: get text to display for message body*@
-    @*@Html.ValueFor(Model => Model.VideoPost.MessageBody)
-    
-    @Html.LabelFor(Model => Model.VideoPost.UserID)*@
+    @*@foreach (var post in Model.VideoPost) {
+        @Html.Label(post.MessageBody)
+    }*@
+       
 
 </div>
 @section Scripts {

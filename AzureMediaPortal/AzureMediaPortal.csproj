@@ -211,7 +211,6 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
-    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -362,11 +361,6 @@
     <Content Include="Views\Comments\Create.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Delete.cshtml" />
-    <Content Include="Views\Posts\Index.cshtml" />
-    <Content Include="Views\Posts\Details.cshtml" />
-    <Content Include="Views\Posts\Create.cshtml" />
-    <Content Include="Views\Posts\Edit.cshtml" />
-    <Content Include="Views\Posts\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
