@@ -164,8 +164,7 @@ namespace AzureMediaPortal.Controllers
 
         public ActionResult WatchPublic(int id = 0) {
             MediaElement mediaelement = db.MediaElements.Find(id);
-            List<Post> posts = new List<Post>();
-           // var post = mediaelement.VideoPost;
+          
             if (mediaelement == null) {
                 return HttpNotFound();
             }
@@ -217,7 +216,9 @@ namespace AzureMediaPortal.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             MediaElement mediaelement = db.MediaElements.Find(id);
+            Post post = db.Posts.Find(id);
             DeleteMedia(mediaelement.AssetId);
+            db.Posts.Remove(post);
             db.MediaElements.Remove(mediaelement);
             db.SaveChanges();
             return RedirectToAction("Index");

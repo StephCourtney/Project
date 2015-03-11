@@ -151,7 +151,8 @@ footer {
     display: block;
     font-size: .85em;
     margin: 0 0 10px;
-    text-align: right;
+    text-align: left;
+    padding-left:23px;
 }
 
     #login a {
@@ -186,7 +187,8 @@ ul#menu {
     font-weight: 600;
     margin: 0 0 5px;
     padding: 0;
-    text-align: right;
+    text-align: left;
+    width: 400px;
 }
 
     ul#menu li {

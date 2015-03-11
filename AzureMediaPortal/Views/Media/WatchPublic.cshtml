@@ -24,11 +24,17 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 <div>
-    @Html.LabelFor(Model => Model.VideoPost)
-    @*TODO: get text to display for message body*@
-    @*@foreach (var post in Model.VideoPost) {
-        @Html.Label(post.MessageBody)
-    }*@
+    <table>
+        <tr>
+            <th>Message Body</th>
+        </tr>
+        @for (int i = 0; i < Model.VideoPost.Count; i++) {
+            @Html.HiddenFor(m => m.VideoPost[i].MessageBody)
+            <tr>
+                <td>@Html.DisplayFor(m => m.VideoPost[i].MessageBody)</td>
+            </tr>
+        }
+    </table>
        
 
 </div>
