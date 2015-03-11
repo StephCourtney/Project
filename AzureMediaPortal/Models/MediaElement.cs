@@ -13,7 +13,7 @@ namespace AzureMediaPortal.Models
         public string FileUrl { get; set; }
         public string AssetId { get; set; }
         public bool IsPublic { get; set; }
-        public Post VideoPost { get; set; }
+        public ICollection<Post> VideoPost { get; set; }
     }
 
 }

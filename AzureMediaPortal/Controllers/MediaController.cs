@@ -87,8 +87,8 @@ namespace AzureMediaPortal.Controllers
             {
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
-                Post vp = new Post { UserID = User.Identity.Name, VideoID = mediaelement.Id, MessageBody = "Test" };
-                mediaelement.VideoPost = vp;
+                //Post vp = new Post { UserID = User.Identity.Name, MessageBody = "Test" };
+                //mediaelement.VideoPost.Add();
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
                 return Json(new { Saved = true, StreamingUrl =  mediaelement.FileUrl});

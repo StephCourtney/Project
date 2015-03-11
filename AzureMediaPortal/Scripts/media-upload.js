@@ -67,6 +67,7 @@ var uploadMetaData = function (file, index)
         url: "/Media/SetMetadata?blocksCount=" + numberOfBlocks + "&fileName=" + name + "&fileSize=" + size,
     }).done(function (state)
     {
+        console.log(state);
         if (state === true)
         {
             $("#fileUpload").hide();
