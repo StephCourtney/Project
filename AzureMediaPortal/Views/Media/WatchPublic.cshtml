@@ -23,15 +23,18 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-<div style="float:right">
+<div style="float:right;">
    <h2>Comments</h2>
    
     <table>
        @foreach (var item in ViewBag.Posts) {
            <tr>
                <td>@item.MessageBody</td>
-           </tr> 
-        }
+           </tr>
+           <tr>
+                <td>@item.UserID</td>
+            </tr>
+       }
     </table>
 </div>
 @section Scripts {
