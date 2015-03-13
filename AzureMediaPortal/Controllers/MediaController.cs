@@ -91,10 +91,13 @@ namespace AzureMediaPortal.Controllers
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
                 mediaelement.VideoPost = new List<Post>();
-                Post vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "Test2" };
-                mediaelement.VideoPost.Add(vp);
+                Post vp = new Post { UserID = User.Identity.Name,  Replies = null, MessageBody = "Bicep Curl" };
+               // mediaelement.VideoPost.Add(vp);
+                vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "Nice Technique" };
+               // mediaelement.VideoPost.Add(vp);
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
+                
                 return Json(new { Saved = true, StreamingUrl =  mediaelement.FileUrl});
             }
             catch (Exception)
@@ -164,18 +167,16 @@ namespace AzureMediaPortal.Controllers
 
         public ActionResult WatchPublic(int id = 0) {
             MediaElement mediaelement = db.MediaElements.Find(id);
-          
+            ViewBag.Posts = db.Posts.Where(p => p.VideoID == id).ToList();
             if (mediaelement == null) {
                 return HttpNotFound();
             }
             if (string.IsNullOrEmpty(mediaelement.FileUrl)) {
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
-                db.Entry(mediaelement).State = EntityState.Modified;
                 db.SaveChanges();
             }
             return View(mediaelement);
         }
-
         
         // POST: /Media/Edit/5
         [HttpPost]
