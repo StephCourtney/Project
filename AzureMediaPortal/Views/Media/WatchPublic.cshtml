@@ -23,17 +23,16 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-<div>
+<div style="float:right">
+   <h2>Comments</h2>
    
- @if (ViewBag.Posts == null) {
-     <p>No comments have been made</p>
- }
- else {
-    foreach (var item in ViewBag.Posts) {
-  
-        @item.MessageBody
-    }
- }
+    <table>
+       @foreach (var item in ViewBag.Posts) {
+           <tr>
+               <td>@item.MessageBody</td>
+           </tr> 
+        }
+    </table>
 </div>
 @section Scripts {
     <script src="~/Scripts/playerframework.min.js"></script>
