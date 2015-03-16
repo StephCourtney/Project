@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using AzureMediaPortal.Models;
-using System.Threading.Tasks;
-using System.IO;
+﻿using AzureMediaPortal.Models;
 using Microsoft.WindowsAzure.MediaServices.Client;
 using Microsoft.WindowsAzure.Storage;
-using System.Configuration;
-using System.Globalization;
-using System.Text;
+using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
-using Microsoft.WindowsAzure.Storage.Auth;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.Entity;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
 
 namespace AzureMediaPortal.Controllers
 {
@@ -69,7 +68,9 @@ namespace AzureMediaPortal.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 mediaelement.UserId = User.Identity.Name;
+               
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,7 +79,9 @@ namespace AzureMediaPortal.Controllers
             return View(mediaelement);
         }
 
+
         //get the metadata and save it with the new element
+        //TODO: Save videoId... etc
         [Authorize]
         [HttpPost]
         public JsonResult Save(MediaElement mediaelement)
@@ -87,8 +90,14 @@ namespace AzureMediaPortal.Controllers
             {
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
+                mediaelement.VideoPost = new List<Post>();
+                //Post vp = new Post { UserID = User.Identity.Name,  Replies = null, MessageBody = "How long should this be done for" };
+                //mediaelement.VideoPost.Add(vp);
+                //vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "" };
+                //mediaelement.VideoPost.Add(vp);
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
+                
                 return Json(new { Saved = true, StreamingUrl =  mediaelement.FileUrl});
             }
             catch (Exception)
@@ -97,18 +106,16 @@ namespace AzureMediaPortal.Controllers
             }
         }
 
-        //generate the streamingurl and locator for the asset and, at the moment only works with mp4
+        //generate the streamingurl and locator for the asset, at the moment only works with mp4
         [Authorize]
         private string GetStreamingUrl(string assetId)
         {
-            CloudMediaContext context = new CloudMediaContext(ConfigurationManager.AppSettings["MediaAccountName"],
-                ConfigurationManager.AppSettings["MediaAccountKey"]);
+            CloudMediaContext context = new CloudMediaContext(ConfigurationManager.AppSettings["MediaAccountName"], ConfigurationManager.AppSettings["MediaAccountKey"]);
 
             var daysForWhichStreamingUrlIsActive = 365;
             var streamingAsset = context.Assets.Where(a => a.Id == assetId).FirstOrDefault();
 
-            IAccessPolicy accessPolicy =
-                accessPolicy = context.AccessPolicies.Create(streamingAsset.Name, TimeSpan.FromDays(daysForWhichStreamingUrlIsActive),
+            IAccessPolicy accessPolicy = context.AccessPolicies.Create(streamingAsset.Name, TimeSpan.FromDays(daysForWhichStreamingUrlIsActive),
                                      AccessPermissions.Read | AccessPermissions.List);
             
             string streamingUrl = string.Empty;
@@ -160,17 +167,20 @@ namespace AzureMediaPortal.Controllers
 
         public ActionResult WatchPublic(int id = 0) {
             MediaElement mediaelement = db.MediaElements.Find(id);
+            ViewBag.Posts = db.Posts.Where(p => p.VideoID == id).ToList();
             if (mediaelement == null) {
                 return HttpNotFound();
             }
             if (string.IsNullOrEmpty(mediaelement.FileUrl)) {
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
-                db.Entry(mediaelement).State = EntityState.Modified;
                 db.SaveChanges();
             }
+
+            Post vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "" };
+            //mediaelement.VideoPost.Add(vp);
+
             return View(mediaelement);
         }
-
         
         // POST: /Media/Edit/5
         [HttpPost]
@@ -211,7 +221,9 @@ namespace AzureMediaPortal.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             MediaElement mediaelement = db.MediaElements.Find(id);
+            Post post = db.Posts.Find(id);
             DeleteMedia(mediaelement.AssetId);
+            db.Posts.Remove(post);
             db.MediaElements.Remove(mediaelement);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -242,7 +254,7 @@ namespace AzureMediaPortal.Controllers
         [HttpPost]
         public ActionResult SetMetadata(int blocksCount, string fileName, long fileSize) {
             //remove hardcoded value at later stage
-            var container = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=walblob;AccountKey=cP3+8Y87xDlW1fUpCh1Q++EyLhavKA3EIFGWvHLhVYVJ/2K42402GP+8Fhh7GEE0nyzx+KQdPLcASbnRE7bb/Q==");
+            var container = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=fitvidsblob;AccountKey=XeSJX2R51EB2UIGdIGs4ckoibI3/9tnSBCaF8QfLouZ2fAtjbJS+pPoApJE9+k0cpCeFXfw2ImdqwOF+kovIUQ==");
             var cb = container.CreateCloudBlobClient().GetContainerReference("temporary-media");
             cb.CreateIfNotExists();
             var fileToUpload = new CloudFile() {

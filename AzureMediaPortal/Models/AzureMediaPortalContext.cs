@@ -13,6 +13,8 @@ namespace AzureMediaPortal.Models
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Post> Posts { get; set; }
+
         
     }
 }

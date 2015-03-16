@@ -14,20 +14,40 @@
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.AssetId)
         @Html.HiddenFor(model => model.FileUrl, new { id = "fileUrl" })
-        @Html.HiddenFor(model => model.UserId)
-       
-      
-    
+        @Html.HiddenFor(model => model.UserId)  
     </fieldset>
 }
-<div id="videoPlayer">
+
+
+<div>
+    <div id="videoPlayer"></div>
 </div>
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+    <div>
+        <h2>Comments</h2>
+
+        <table>
+            @foreach (var item in ViewBag.Posts) {
+                <tr>
+                    <td>@item.MessageBody</td>
+                    <td>@item.UserID</td>
+                </tr>
+            }
+        </table>
+        <div>
+            Comment: <input type="text" id="comment" />
+            <button id="saveComment">Post</button>
+        </div>
+
+    </div>
+
 @section Scripts {
     <script src="~/Scripts/playerframework.min.js"></script>
     <script src="~/Scripts/media-player.js"></script>
+    <script src="~/Scripts/media-upload.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         mediaPlayer.initFunction("videoPlayer", $("#fileUrl").val());
