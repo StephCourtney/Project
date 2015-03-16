@@ -91,8 +91,8 @@ namespace AzureMediaPortal.Controllers
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
                 mediaelement.VideoPost = new List<Post>();
-                Post vp = new Post { UserID = User.Identity.Name,  Replies = null, MessageBody = "How long should this be done for>" };
-                mediaelement.VideoPost.Add(vp);
+                //Post vp = new Post { UserID = User.Identity.Name,  Replies = null, MessageBody = "How long should this be done for" };
+                //mediaelement.VideoPost.Add(vp);
                 //vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "" };
                 //mediaelement.VideoPost.Add(vp);
                 db.MediaElements.Add(mediaelement);
@@ -175,6 +175,10 @@ namespace AzureMediaPortal.Controllers
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
                 db.SaveChanges();
             }
+
+            Post vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "" };
+            //mediaelement.VideoPost.Add(vp);
+
             return View(mediaelement);
         }
         

@@ -11,9 +11,27 @@ $(document).ready(function ()
 {
     $(document).on("click", "#fileUpload", beginUpload);
     $(document).on("click", "#saveDetails", saveDetails);
+    $(document).on("click", "#saveComment", addComment(params));
     $("#detailsPanel").hide();
     $("#progressBar").progressbar(0);
 });
+
+//var addComment = function (params)
+//{
+   
+//    var dataPost = {
+//        "MessageBody": $("#comment").val()
+//    }
+//    $.ajax({
+//        type: "POST",
+//        data: params,
+//        async: false,
+//        contentType: "application/json",
+//        data: JSON.stringify(dataPost),
+//        url: "/Media/WatchPublic/1",
+//        success: function () { console.log(); }
+//    });
+//}
 
 var beginUpload = function ()
 {
