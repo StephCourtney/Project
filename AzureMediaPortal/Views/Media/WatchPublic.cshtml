@@ -18,25 +18,32 @@
     </fieldset>
 }
 
-<div id="videoPlayer"></div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-<div style="float:right;">
-   <h2>Comments</h2>
-   
-    <table>
-       @foreach (var item in ViewBag.Posts) {
-           <tr>
-               <td>@item.MessageBody</td>
-           </tr>
-           <tr>
-                <td>@item.UserID</td>
-            </tr>
-       }
-    </table>
-</div>
+
+    <div id="videoPlayer"></div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+    <div>
+        <h2>Comments</h2>
+
+        <table>
+            @foreach (var item in ViewBag.Posts) {
+                <tr>
+                    <td>@item.MessageBody</td>
+                    <td>@item.UserID</td>
+                </tr>
+                <tr>
+                   
+                </tr>
+            }
+        </table>
+    </div>
+
+
+
+
 @section Scripts {
     <script src="~/Scripts/playerframework.min.js"></script>
     <script src="~/Scripts/media-player.js"></script>
