@@ -14,6 +14,7 @@ $(document).ready(function ()
     $(document).on("click", "#saveComment", addComment(params));
     $("#detailsPanel").hide();
     $("#progressBar").progressbar(0);
+   
 });
 
 //var addComment = function (params)
@@ -200,25 +201,16 @@ var updateProgress = function ()
     var progress = currentChunk / numberOfBlocks * 100;
     if (progress <= 100)
     {
-        $("#progressBar").progressbar("option", "value", parseInt(progress));
+
+        $("#progressBar").progressbar({
+            value: parseInt(progress)
+        });
+       
         displayStatusMessage("Uploaded " + parseInt(progress) + "%");
     }
 
 }
 
  
-$(document).ready(function(){ 
-    $('.quarter').click(function(){
-        $(this).parent().prev().children('span').css('width','25%');
-    });
-    $('.half').click(function(){
-        $(this).parent().prev().children('span').css('width','50%');
-    });
-    $('.three-quarters').click(function(){
-        $(this).parent().prev().children('span').css('width','75%');
-    });
-    $('.full').click(function(){
-        $(this).parent().prev().children('span').css('width','100%');
-    });  
-});
+
    
