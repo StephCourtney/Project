@@ -92,7 +92,10 @@ namespace AzureMediaPortal.Controllers
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
                 mediaelement.VideoPost = new List<Post>();
-                //Post vp = new Post { UserID = User.Identity.Name,  Replies = null, MessageBody = "How long should this be done for" };
+                //Post vp = new Post { UserID = User.Identity.Name, MessageBody = "" };
+                //vp.Replies = new List<Comment>();
+                //Comment c = new Comment { UserID = User.Identity.Name, CommentText = "Ok, video to follow" };
+                //vp.Replies.Add(c);
                 //mediaelement.VideoPost.Add(vp);
                 //vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "" };
                 //mediaelement.VideoPost.Add(vp);
