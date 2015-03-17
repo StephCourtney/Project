@@ -1,0 +1,9 @@
+diff a/AzureMediaPortal/Scripts/media-upload.js b/AzureMediaPortal/Scripts/media-upload.js	(rejected hunks)
+@@ -201,7 +201,6 @@
+     var progress = currentChunk / numberOfBlocks * 100;
+     if (progress <= 100)
+     {
+-        $("#progressBar").progressbar("option", "value", parseInt(progress));
+ 
+         $("#progressBar").progressbar({
+             value: parseInt(progress)

@@ -22,9 +22,14 @@ namespace AzureMediaPortal
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            //OAuthWebSecurity.RegisterFacebookClient(
-            //    appId: "",
-            //    appSecret: "");
+            
+
+            OAuthWebSecurity.RegisterFacebookClient(
+                appId: "1624708161092290",
+                appSecret: "6a671a9a863e4cb41be8b472f196b138",
+                displayName: "Facebook"
+                );
+                
 
             //OAuthWebSecurity.RegisterGoogleClient();
         }

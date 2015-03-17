@@ -14,7 +14,10 @@
             <input type="file" id="selectFile" value=" " />
             <input type="button" id="fileUpload" name="fileUpload" value="Upload" />
         </div>
-        <div id="progressBar" style="width: 50%; height: 20px; background-color: grey"></div>
+        
+        <div id="progressBar" style="width: 50%; height: 20px; background-color: grey" class="ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        </div>
+           
         <br />
             <label id="statusMessage"></label>
     <br />
@@ -41,6 +44,7 @@
     <script src="~/Scripts/media-player.js"></script>
     <script src="~/Scripts/media-upload.js"></script>
     <script src="~/Scripts/playerframework.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryval")
 }

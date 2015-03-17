@@ -1,0 +1,33 @@
+﻿@model AzureMediaPortal.Models.Comment
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Comment</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CommentText)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CommentText)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CommentTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CommentTime)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

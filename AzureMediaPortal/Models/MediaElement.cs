@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,9 @@ namespace AzureMediaPortal.Models
         public string FileUrl { get; set; }
         public string AssetId { get; set; }
         public bool IsPublic { get; set; }
+        public int VideoID { get; set;}
+        [ForeignKey("VideoID")]
+        public List<Post> VideoPost {get; set;}
     }
 
 }
