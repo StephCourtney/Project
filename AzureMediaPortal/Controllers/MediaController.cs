@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -223,7 +224,14 @@ namespace AzureMediaPortal.Controllers
             MediaElement mediaelement = db.MediaElements.Find(id);
             Post post = db.Posts.Find(id);
             DeleteMedia(mediaelement.AssetId);
-            db.Posts.Remove(post);
+            if (post == null) 
+            {
+            }
+            else 
+            {
+                db.Posts.Remove(post);
+            }
+           
             db.MediaElements.Remove(mediaelement);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -325,9 +333,8 @@ namespace AzureMediaPortal.Controllers
                 string fileSizeMessage = fileSizeInKb > 1024 ?
                 string.Concat((fileSizeInKb / 1024).ToString(CultureInfo.CurrentCulture), " MB") :
                 string.Concat(fileSizeInKb.ToString(CultureInfo.CurrentCulture), " KB");
-                model.UploadStatusMessage = string.Format(CultureInfo.CurrentCulture,
-                    "File uploaded successfully. {0} took {1} seconds to upload",
-                    fileSizeMessage, duration.TotalSeconds);
+                model.UploadStatusMessage = "File uploaded successfully";
+               // Image greenTick = Image.FromFile("~Images/greenTick.png");
                 CreateMediaAsset(model);
             }
             catch (StorageException e)
@@ -436,7 +443,7 @@ namespace AzureMediaPortal.Controllers
             ismAssetFiles.First().IsPrimary = true;
             ismAssetFiles.First().Update();
            
-            model.UploadStatusMessage += " Created Media Asset '" + asset.Name + "' successfully.";
+            //model.UploadStatusMessage += " Created Media Asset '" + asset.Name + "' successfully.";
             model.AssetId = asset.Id;
         }
 
