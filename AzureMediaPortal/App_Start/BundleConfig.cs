@@ -24,6 +24,7 @@ namespace AzureMediaPortal
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/zocial.css",
                 "~/Content/site.css",
                 "~/Content/playerframework.css"));
 
