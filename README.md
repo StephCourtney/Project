@@ -1,1 +1,4 @@
-Azure video delivery service
+Includes:
+-Improved UI
+-Hard coded comments
+-Comments box
