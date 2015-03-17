@@ -205,3 +205,20 @@ var updateProgress = function ()
     }
 
 }
+
+ 
+$(document).ready(function(){ 
+    $('.quarter').click(function(){
+        $(this).parent().prev().children('span').css('width','25%');
+    });
+    $('.half').click(function(){
+        $(this).parent().prev().children('span').css('width','50%');
+    });
+    $('.three-quarters').click(function(){
+        $(this).parent().prev().children('span').css('width','75%');
+    });
+    $('.full').click(function(){
+        $(this).parent().prev().children('span').css('width','100%');
+    });  
+});
+   
