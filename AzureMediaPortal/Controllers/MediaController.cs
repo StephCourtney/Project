@@ -31,11 +31,22 @@ namespace AzureMediaPortal.Controllers
         public ActionResult Index()
         {
             return View(db.MediaElements.Where(m => m.UserId == User.Identity.Name).ToList());
+           
+          
         }
         
         
-        public ActionResult PublicVideos() {
-            return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
+        public ActionResult PublicVideos(string searchString)
+        {
+            //search functionality, ignores case
+            if (String.IsNullOrEmpty(searchString)) 
+            {
+                return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
+            }
+            else 
+            {
+                return View(db.MediaElements.Where(v => v.Title.ToLower().Contains(searchString.ToLower())).ToList());
+            }
         }
         
         // GET: /Media/Details/

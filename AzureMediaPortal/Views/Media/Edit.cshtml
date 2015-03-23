@@ -34,6 +34,10 @@
             @Html.EditorFor(model => model.IsPublic)
             @Html.ValidationMessageFor(model => model.IsPublic)
         </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.VideoPost)
+            @Html.ValidationMessageFor(model => model.VideoPost)
+        </div>
 
         <p>
             <input type="submit" value="Save" />
