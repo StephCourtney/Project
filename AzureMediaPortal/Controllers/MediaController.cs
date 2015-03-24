@@ -44,7 +44,7 @@ namespace AzureMediaPortal.Controllers
                 return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
             }
             else 
-            {
+            {//johns demo
                 return View(db.MediaElements.Where(v => v.Title.ToLower().Contains(searchString.ToLower())).ToList());
             }
         }
