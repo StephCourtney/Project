@@ -16,7 +16,15 @@
         </div>
     </section>
 }
-<h2></h2>
+<p>
+
+    @using (Html.BeginForm()) {
+        <p style="float:right">
+            Search: @Html.TextBox("SearchString")
+            <input type="submit" value="Filter" />
+        </p>
+    }
+    </p>
 <table>
     @foreach (var item in Model) {
         <tr>

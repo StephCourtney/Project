@@ -7,7 +7,6 @@ using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.IO;
@@ -15,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-
+//comment
 namespace AzureMediaPortal.Controllers
 {
     
@@ -30,11 +29,22 @@ namespace AzureMediaPortal.Controllers
         public ActionResult Index()
         {
             return View(db.MediaElements.Where(m => m.UserId == User.Identity.Name).ToList());
+           
+          
         }
         
         
-        public ActionResult PublicVideos() {
-            return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
+        public ActionResult PublicVideos(string searchString)
+        {
+            //search functionality, ignores case
+            if (String.IsNullOrEmpty(searchString)) 
+            {
+                return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
+            }
+            else 
+            {
+                return View(db.MediaElements.Where(v => v.Title.ToLower().Contains(searchString.ToLower()) && v.IsPublic.Equals(true)).ToList());
+            }
         }
         
         // GET: /Media/Details/
@@ -91,7 +101,10 @@ namespace AzureMediaPortal.Controllers
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
                 mediaelement.VideoPost = new List<Post>();
-                //Post vp = new Post { UserID = User.Identity.Name,  Replies = null, MessageBody = "How long should this be done for" };
+                //Post vp = new Post { UserID = User.Identity.Name, MessageBody = "" };
+                //vp.Replies = new List<Comment>();
+                //Comment c = new Comment { UserID = User.Identity.Name, CommentText = "Ok, video to follow" };
+                //vp.Replies.Add(c);
                 //mediaelement.VideoPost.Add(vp);
                 //vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "" };
                 //mediaelement.VideoPost.Add(vp);
@@ -112,9 +125,9 @@ namespace AzureMediaPortal.Controllers
         {
             CloudMediaContext context = new CloudMediaContext(ConfigurationManager.AppSettings["MediaAccountName"], ConfigurationManager.AppSettings["MediaAccountKey"]);
 
+            //create access policy for url
             var daysForWhichStreamingUrlIsActive = 365;
             var streamingAsset = context.Assets.Where(a => a.Id == assetId).FirstOrDefault();
-
             IAccessPolicy accessPolicy = context.AccessPolicies.Create(streamingAsset.Name, TimeSpan.FromDays(daysForWhichStreamingUrlIsActive),
                                      AccessPermissions.Read | AccessPermissions.List);
             
@@ -142,6 +155,8 @@ namespace AzureMediaPortal.Controllers
                 mp4Uri.Path += "/" + streamingAssetFile.Name;
                 streamingUrl = mp4Uri.ToString();
             }
+            Console.Write(streamingUrl);
+           // Console.ReadLine();
             return streamingUrl;
         }
 
@@ -171,7 +186,8 @@ namespace AzureMediaPortal.Controllers
             if (mediaelement == null) {
                 return HttpNotFound();
             }
-            if (string.IsNullOrEmpty(mediaelement.FileUrl)) {
+            if (string.IsNullOrEmpty(mediaelement.FileUrl)) 
+            {
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
                 db.SaveChanges();
             }
@@ -183,6 +199,7 @@ namespace AzureMediaPortal.Controllers
         }
         
         // POST: /Media/Edit/5
+        // TODO: add string to post object, save to db
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -223,7 +240,14 @@ namespace AzureMediaPortal.Controllers
             MediaElement mediaelement = db.MediaElements.Find(id);
             Post post = db.Posts.Find(id);
             DeleteMedia(mediaelement.AssetId);
-            db.Posts.Remove(post);
+            if (post == null) 
+            {
+            }
+            else 
+            {
+                db.Posts.Remove(post);
+            }
+           
             db.MediaElements.Remove(mediaelement);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -325,9 +349,8 @@ namespace AzureMediaPortal.Controllers
                 string fileSizeMessage = fileSizeInKb > 1024 ?
                 string.Concat((fileSizeInKb / 1024).ToString(CultureInfo.CurrentCulture), " MB") :
                 string.Concat(fileSizeInKb.ToString(CultureInfo.CurrentCulture), " KB");
-                model.UploadStatusMessage = string.Format(CultureInfo.CurrentCulture,
-                    "File uploaded successfully. {0} took {1} seconds to upload",
-                    fileSizeMessage, duration.TotalSeconds);
+                model.UploadStatusMessage = "File uploaded successfully";
+               // Image greenTick = Image.FromFile("~Images/greenTick.png");
                 CreateMediaAsset(model);
             }
             catch (StorageException e)
@@ -436,7 +459,7 @@ namespace AzureMediaPortal.Controllers
             ismAssetFiles.First().IsPrimary = true;
             ismAssetFiles.First().Update();
            
-            model.UploadStatusMessage += " Created Media Asset '" + asset.Name + "' successfully.";
+            //model.UploadStatusMessage += " Created Media Asset '" + asset.Name + "' successfully.";
             model.AssetId = asset.Id;
         }
 

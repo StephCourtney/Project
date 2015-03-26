@@ -12,6 +12,8 @@ namespace AzureMediaPortal.Models
         public int VideoID { get; set; }
         public string UserID { get; set; }
         public string MessageBody { get; set; }
+        public int CommentID { get; set; }
+        [ForeignKey("CommentID")]
         public List<Comment> Replies { get; set; }
     }
 }

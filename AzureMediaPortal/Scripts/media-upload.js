@@ -169,6 +169,7 @@ var sendFile = function (file, chunkSize)
         {
             if (notice.error || notice.isLastBlock)
             {
+               
                 displayStatusMessage(notice.message);
                 if (notice.isLastBlock)
                 {
