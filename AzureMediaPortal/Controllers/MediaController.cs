@@ -44,8 +44,8 @@ namespace AzureMediaPortal.Controllers
                 return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
             }
             else 
-            {//johns demo
-                return View(db.MediaElements.Where(v => v.Title.ToLower().Contains(searchString.ToLower())).ToList());
+            {
+                return View(db.MediaElements.Where(v => v.Title.ToLower().Contains(searchString.ToLower()) && v.IsPublic.Equals(true)).ToList());
             }
         }
         
@@ -188,7 +188,8 @@ namespace AzureMediaPortal.Controllers
             if (mediaelement == null) {
                 return HttpNotFound();
             }
-            if (string.IsNullOrEmpty(mediaelement.FileUrl)) {
+            if (string.IsNullOrEmpty(mediaelement.FileUrl)) 
+            {
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
                 db.SaveChanges();
             }
@@ -200,6 +201,7 @@ namespace AzureMediaPortal.Controllers
         }
         
         // POST: /Media/Edit/5
+        // TODO: add string to post object, save to db
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
