@@ -33,7 +33,6 @@ namespace AzureMediaPortal.Controllers
           
         }
         
-        
         public ActionResult PublicVideos(string searchString)
         {
             //search functionality, ignores case
@@ -41,10 +40,11 @@ namespace AzureMediaPortal.Controllers
             {
                 return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
             }
-            else 
+            else
             {
                 return View(db.MediaElements.Where(v => v.Title.ToLower().Contains(searchString.ToLower()) && v.IsPublic.Equals(true)).ToList());
             }
+          
         }
         
         // GET: /Media/Details/
