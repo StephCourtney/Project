@@ -24,18 +24,21 @@ namespace AzureMediaPortal.Controllers
 
         
         // GET: /Media/
-        //Return media elements for secified user and list them
+        // Return media elements for secified user and list them
+        // Will be seen when the user clicks on the "My Videos" tab
         [Authorize]
         public ActionResult Index()
         {
             return View(db.MediaElements.Where(m => m.UserId == User.Identity.Name).ToList());
-           
-          
+
         }
         
+        // Returns all of the public videos when no search paramter
+        // has been entered, otherwise returns the videos with a 
+        // title that matches the search parameter.
+        // case in-sensitive
         public ActionResult PublicVideos(string searchString)
         {
-            //search functionality, ignores case
             if (String.IsNullOrEmpty(searchString)) 
             {
                 return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
@@ -49,26 +52,17 @@ namespace AzureMediaPortal.Controllers
         
         // GET: /Media/Details/
         //Return the selected media element and show details 
-        [Authorize]
-        public ActionResult Details(int id = 0)
-        {
-            MediaElement mediaelement = db.MediaElements.FirstOrDefault(m => m.UserId == User.Identity.Name && m.Id == id);
-            if (mediaelement == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mediaelement);
-        }
+        //[Authorize]
+        //public ActionResult Details(int id = 0)
+        //{
+        //    MediaElement mediaelement = db.MediaElements.FirstOrDefault(m => m.UserId == User.Identity.Name && m.Id == id);
+        //    if (mediaelement == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(mediaelement);
+        //}
 
-        
-        // GET: /Media/Create
-        [Authorize]
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        
         // POST: /Media/Create
         //Save the new media element to the database
         [HttpPost]
