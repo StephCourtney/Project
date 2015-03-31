@@ -119,7 +119,7 @@ namespace AzureMediaPortal.Controllers
         {
             CloudMediaContext context = new CloudMediaContext(ConfigurationManager.AppSettings["MediaAccountName"], ConfigurationManager.AppSettings["MediaAccountKey"]);
 
-            //create access policy for url
+            //create year long access policy
             var daysForWhichStreamingUrlIsActive = 365;
             var streamingAsset = context.Assets.Where(a => a.Id == assetId).FirstOrDefault();
             IAccessPolicy accessPolicy = context.AccessPolicies.Create(streamingAsset.Name, TimeSpan.FromDays(daysForWhichStreamingUrlIsActive),
@@ -149,8 +149,7 @@ namespace AzureMediaPortal.Controllers
                 mp4Uri.Path += "/" + streamingAssetFile.Name;
                 streamingUrl = mp4Uri.ToString();
             }
-            Console.Write(streamingUrl);
-           // Console.ReadLine();
+            System.Diagnostics.Debug.WriteLine("This will be displayed in output window");
             return streamingUrl;
         }
 
