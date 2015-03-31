@@ -7,6 +7,7 @@ using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.IO;
@@ -177,6 +178,7 @@ namespace AzureMediaPortal.Controllers
         public ActionResult WatchPublic(int id = 0) {
             MediaElement mediaelement = db.MediaElements.Find(id);
             ViewBag.Posts = db.Posts.Where(p => p.VideoID == id).ToList();
+         
             if (mediaelement == null) {
                 return HttpNotFound();
             }

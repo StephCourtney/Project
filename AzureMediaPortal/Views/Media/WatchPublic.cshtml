@@ -37,10 +37,9 @@
                 </tr>
             }
         </table>
-        <div>
-            Comment: <input type="text" id="comment" />
-            <input type="button" id="fileUpload" name="fileUpload" value="Upload" />
-        </div>
+        <section id="comments">
+           @Html.Partial("_NewComment")
+        </section>
 
     </div>
 
