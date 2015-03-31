@@ -186,7 +186,7 @@ namespace AzureMediaPortal.Controllers
                 db.SaveChanges();
             }
 
-            Post vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "" };
+ 
             //mediaelement.VideoPost.Add(vp);
 
             return View(mediaelement);
