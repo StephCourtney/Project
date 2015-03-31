@@ -175,25 +175,62 @@ namespace AzureMediaPortal.Controllers
             return View(mediaelement);
         }
 
-        public ActionResult WatchPublic(int id = 0) {
+        //public ActionResult WatchPublic(int id = 0) {
+        //    MediaElement mediaelement = db.MediaElements.Find(id);
+        //    ViewBag.Posts = db.Posts.Where(p => p.VideoID == id).ToList();
+           
+        //    if (mediaelement == null) {
+        //        return HttpNotFound();
+        //    }
+        //    if (string.IsNullOrEmpty(mediaelement.FileUrl)) 
+        //    {
+        //        mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
+        //        db.SaveChanges();
+        //    }
+
+ 
+        //    //mediaelement.VideoPost.Add(vp);
+
+        //    return View(mediaelement);
+        //}
+
+
+        //TODO save new post to db
+        public ActionResult PublicVideoPlayback(int id = 0) 
+        {
             MediaElement mediaelement = db.MediaElements.Find(id);
             ViewBag.Posts = db.Posts.Where(p => p.VideoID == id).ToList();
-         
+            var view1 = mediaelement;
+            var view2 = new Post();
+
             if (mediaelement == null) {
                 return HttpNotFound();
             }
             if (string.IsNullOrEmpty(mediaelement.FileUrl)) 
             {
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
+                
                 db.SaveChanges();
             }
-
- 
-            //mediaelement.VideoPost.Add(vp);
-
-            return View(mediaelement);
+            return View(Tuple.Create(view1, view2));
         }
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PublicVideoPlayback(Post post) 
+        {
+            if (ModelState.IsValid) 
+            {
+                
+                db.Posts.Add(post);
+                db.SaveChanges();
+                return RedirectToAction("PublicVideoPlayback");
+            }
+
+            return View(post);
+        }
+
+
         // POST: /Media/Edit/5
         // TODO: add string to post object, save to db
         [HttpPost]

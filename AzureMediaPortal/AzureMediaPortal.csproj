@@ -366,6 +366,7 @@
     <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Posts\Delete.cshtml" />
     <Content Include="Views\Shared\_NewComment.cshtml" />
+    <Content Include="Views\Media\PublicVideoPlayback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
