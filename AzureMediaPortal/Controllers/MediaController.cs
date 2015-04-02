@@ -202,7 +202,6 @@ namespace AzureMediaPortal.Controllers
             ViewBag.Posts = db.Posts.Where(p => p.VideoID == id).ToList();
             var view1 = mediaelement;
             var view2 = new Post();
-
             if (mediaelement == null) {
                 return HttpNotFound();
             }
@@ -217,17 +216,19 @@ namespace AzureMediaPortal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PublicVideoPlayback(Post post) 
+        public ActionResult PublicVideoPlayback(Post post, MediaElement media) 
         {
             if (ModelState.IsValid) 
             {
-                
+                post.UserID = User.Identity.Name;
+                post.VideoID = media.Id;
+                System.Diagnostics.Debug.WriteLine("Message: " +post.MessageBody);
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("PublicVideoPlayback");
             }
 
-            return View(post);
+            return View();
         }
 
 

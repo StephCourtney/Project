@@ -1,7 +1,7 @@
 ﻿@model Tuple<AzureMediaPortal.Models.MediaElement, AzureMediaPortal.Models.Post>
 
 @{
-    ViewBag.Title = "WatchPublic";
+    ViewBag.Title = @Html.DisplayFor(model => model.Item1.Title);
 }
 
 <h2>@Html.DisplayFor(model => model.Item1.Title)</h2>
@@ -37,45 +37,28 @@
             </tr>
         }
     </table>
-    <section id="comments">
+  
        @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
 
         <fieldset>
-            <legend>Post</legend>
-
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Item2.VideoID)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Item2.VideoID)
-                @Html.ValidationMessageFor(model => model.Item2.VideoID)
-            </div>
-
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Item2.UserID)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Item2.UserID)
-                @Html.ValidationMessageFor(model => model.Item2.UserID)
-            </div>
 
             <div class="editor-label">
                 @Html.LabelFor(model => model.Item2.MessageBody)
             </div>
             <div class="editor-field">
+
                 @Html.EditorFor(model => model.Item2.MessageBody)
                 @Html.ValidationMessageFor(model => model.Item2.MessageBody)
-            </div>
 
+            </div>
             <p>
-                <input type="submit" value="Create" />
+                <input type="submit" value="Post" />
             </p>
         </fieldset>
        }
-    </section>
-
+   
 </div>
 
 @section Scripts {
