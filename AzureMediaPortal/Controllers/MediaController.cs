@@ -215,6 +215,7 @@ namespace AzureMediaPortal.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult PublicVideoPlayback(Post post, MediaElement media) 
         {
