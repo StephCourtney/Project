@@ -198,7 +198,7 @@ namespace AzureMediaPortal.Controllers
             {
                 post.UserID = User.Identity.Name;
                 post.VideoID = media.Id;
-                post.CommentTime = DateTime.Now.ToString("HH:mm dd/mmm/yy");
+                post.CommentTime = DateTime.Now.ToString("HH:mm, dd MMM yy");
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("PublicVideoPlayback");
@@ -360,7 +360,7 @@ namespace AzureMediaPortal.Controllers
                 string.Concat((fileSizeInKb / 1024).ToString(CultureInfo.CurrentCulture), " MB") :
                 string.Concat(fileSizeInKb.ToString(CultureInfo.CurrentCulture), " KB");
                 model.UploadStatusMessage = "File uploaded successfully";
-               // Image greenTick = Image.FromFile("~Images/greenTick.png");
+              
                 CreateMediaAsset(model);
             }
             catch (StorageException e)

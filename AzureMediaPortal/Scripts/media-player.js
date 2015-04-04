@@ -7,7 +7,7 @@
             mediaPluginFallbackOrder: ["VideoElementMediaPlugin", "SilverlightMediaPlugin"],
             width: "480px",
             height: "320px",
-            sources:
+            sources: 
             [
                 {
                     src: sourceUrl,
