@@ -216,6 +216,7 @@ namespace AzureMediaPortal.Controllers
             {
                 post.UserID = User.Identity.Name;
                 post.VideoID = media.Id;
+                post.CommentTime = DateTime.Now.ToString("HH:mm dd/mmm/yy");
                 //System.Diagnostics.Debug.WriteLine("Message: " +post.MessageBody);
                 db.Posts.Add(post);
                 db.SaveChanges();
