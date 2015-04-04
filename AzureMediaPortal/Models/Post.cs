@@ -12,8 +12,19 @@ namespace AzureMediaPortal.Models
         public int PostID { get; set; }
         public int VideoID { get; set; }
         public string UserID { get; set; }
-        
+        [Display(Name="Comment: ")]
         public string MessageBody { get; set; }
-       
+        private string commentTime;
+        public string CommentTime 
+        {
+            get 
+            {
+                return commentTime;
+            }
+            set 
+            {
+                commentTime = DateTime.Now.ToString("HH:mm dd/mmm/yy");
+            }
+        }
     }
 }

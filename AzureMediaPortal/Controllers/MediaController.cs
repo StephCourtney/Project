@@ -96,13 +96,6 @@ namespace AzureMediaPortal.Controllers
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
                 mediaelement.VideoPost = new List<Post>();
-                //Post vp = new Post { UserID = User.Identity.Name, MessageBody = "" };
-                //vp.Replies = new List<Comment>();
-                //Comment c = new Comment { UserID = User.Identity.Name, CommentText = "Ok, video to follow" };
-                //vp.Replies.Add(c);
-                //mediaelement.VideoPost.Add(vp);
-                //vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "" };
-                //mediaelement.VideoPost.Add(vp);
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
                 
@@ -223,7 +216,7 @@ namespace AzureMediaPortal.Controllers
             {
                 post.UserID = User.Identity.Name;
                 post.VideoID = media.Id;
-                System.Diagnostics.Debug.WriteLine("Message: " +post.MessageBody);
+                //System.Diagnostics.Debug.WriteLine("Message: " +post.MessageBody);
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("PublicVideoPlayback");
