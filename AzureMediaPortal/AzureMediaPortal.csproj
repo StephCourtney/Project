@@ -359,7 +359,6 @@
     <Content Include="Views\Media\Delete.cshtml" />
     <Content Include="Views\Media\Upload.cshtml" />
     <Content Include="Views\Media\PublicVideos.cshtml" />
-    <Content Include="Views\Media\WatchPublic.cshtml" />
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\Posts\Details.cshtml" />
     <Content Include="Views\Posts\Create.cshtml" />

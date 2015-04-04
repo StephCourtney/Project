@@ -168,27 +168,9 @@ namespace AzureMediaPortal.Controllers
             return View(mediaelement);
         }
 
-        //public ActionResult WatchPublic(int id = 0) {
-        //    MediaElement mediaelement = db.MediaElements.Find(id);
-        //    ViewBag.Posts = db.Posts.Where(p => p.VideoID == id).ToList();
-           
-        //    if (mediaelement == null) {
-        //        return HttpNotFound();
-        //    }
-        //    if (string.IsNullOrEmpty(mediaelement.FileUrl)) 
-        //    {
-        //        mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
-        //        db.SaveChanges();
-        //    }
 
- 
-        //    //mediaelement.VideoPost.Add(vp);
-
-        //    return View(mediaelement);
-        //}
-
-
-        //TODO save new post to db
+        // POST: Saves comments to the db including the time and loads the 
+        //       selected video based on the id
         public ActionResult PublicVideoPlayback(int id = 0) 
         {
             MediaElement mediaelement = db.MediaElements.Find(id);
@@ -217,7 +199,6 @@ namespace AzureMediaPortal.Controllers
                 post.UserID = User.Identity.Name;
                 post.VideoID = media.Id;
                 post.CommentTime = DateTime.Now.ToString("HH:mm dd/mmm/yy");
-                //System.Diagnostics.Debug.WriteLine("Message: " +post.MessageBody);
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("PublicVideoPlayback");

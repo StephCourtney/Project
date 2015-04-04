@@ -28,16 +28,17 @@
 </div>
 <div>
     <h2>Comments</h2>
-    
-    <table>
-        @foreach (var item in ViewBag.Posts) {
-            <tr>
-                <td>@item.MessageBody</td>
-                <td><i>User: @item.UserID</i></td>
-                <td><i>Time: @item.CommentTime</i></td>   
-            </tr>
-        }
-    </table>
+    <div style="background-color: #DDEBEE; width: 70%">
+        <table>
+            @foreach (var item in ViewBag.Posts) {
+                <tr>
+                    <td>@item.MessageBody</td>
+                    <td><i>User: @item.UserID</i></td>
+                    <td><i>Time: @item.CommentTime</i></td> 
+                </tr>
+            }
+        </table>
+    </div>
   
        @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
