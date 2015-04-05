@@ -15,6 +15,5 @@ namespace AzureMediaPortal.Models
         [Display(Name="Comment: ")]
         public string MessageBody { get; set; }
         public string CommentTime {get; set;}
-        
     }
 }

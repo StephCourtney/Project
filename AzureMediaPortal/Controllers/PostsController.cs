@@ -9,6 +9,7 @@ using AzureMediaPortal.Models;
 
 namespace AzureMediaPortal.Controllers
 {
+    [Authorize]
     public class PostsController : Controller
     {
         private AzureMediaPortalContext db = new AzureMediaPortalContext();

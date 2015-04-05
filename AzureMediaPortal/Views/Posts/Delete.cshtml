@@ -11,7 +11,7 @@
     <legend>Post</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.VideoID)
+        <b> @Html.DisplayNameFor(model => model.VideoID):</b>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.VideoID)
@@ -29,6 +29,9 @@
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.MessageBody)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CommentTime)
     </div>
 </fieldset>
 @using (Html.BeginForm()) {

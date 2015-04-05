@@ -30,14 +30,18 @@
     <h2>Comments</h2>
     <div style="background-color: #DDEBEE; width: 70%">
         <table>
-            @foreach (var item in ViewBag.Posts) {
+            @foreach (var item in ViewBag.Posts) 
+            {
                 <tr>
                     <td>@item.MessageBody</td>
                     <td><i>User: @item.UserID</i></td>
                     <td><i>Time: @item.CommentTime</i></td> 
-                </tr>
+                </tr> 
             }
         </table>
+     
+       <p style="float:right;"> @Html.ActionLink("Edit your comments", "Index", "Posts")</p>
+    
     </div>
   
        @using (Html.BeginForm()) {

@@ -1,21 +1,15 @@
 ﻿@model IEnumerable<AzureMediaPortal.Models.Post>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Your comments";
 }
 
-<h2>Index</h2>
+<h2>Your Comments</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.VideoID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MessageBody)
@@ -23,23 +17,26 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.VideoID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MessageBody)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PostID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PostID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PostID })
-        </td>
-    </tr>
+@foreach (var item in Model) 
+{
+    if (User.Identity.Name == item.UserID) 
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VideoID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MessageBody)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PostID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.PostID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PostID })
+
+            </td>
+        </tr>
+    }
+
 }
 
 </table>
