@@ -19,6 +19,7 @@ namespace AzureMediaPortal.Controllers
 
         public ActionResult Index()
         {
+
             return View(db.Posts.ToList());
         }
 
@@ -52,6 +53,7 @@ namespace AzureMediaPortal.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -65,6 +67,7 @@ namespace AzureMediaPortal.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            
             Post post = db.Posts.Find(id);
             if (post == null)
             {

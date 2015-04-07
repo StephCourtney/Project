@@ -9,7 +9,7 @@
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.VideoID)
+            @Html.DisplayNameFor(model => model.VideoTitle)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MessageBody)
@@ -23,14 +23,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.VideoID)
+                @Html.DisplayFor(modelItem => item.VideoTitle)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MessageBody)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.PostID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.PostID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.PostID })
 
             </td>

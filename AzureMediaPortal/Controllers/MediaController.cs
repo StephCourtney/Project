@@ -198,13 +198,22 @@ namespace AzureMediaPortal.Controllers
             {
                 post.UserID = User.Identity.Name;
                 post.VideoID = media.Id;
+                post.VideoTitle = VideoTitle(media.Id);
+               // System.Diagnostics.Debug.WriteLine("Title: " + media.Title);
                 post.CommentTime = DateTime.Now.ToString("HH:mm, dd MMM yy");
+               // post.CommentTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("HH:mm, dd MMM yy");
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("PublicVideoPlayback");
             }
 
             return View();
+        }
+
+        public string VideoTitle(int vidID) 
+        {
+            MediaElement m = db.MediaElements.Find(vidID);
+            return m.Title;
         }
 
 

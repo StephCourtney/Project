@@ -15,6 +15,7 @@
         @Html.HiddenFor(model => model.Item1.AssetId)
         @Html.HiddenFor(model => model.Item1.FileUrl, new { id = "fileUrl" })
         @Html.HiddenFor(model => model.Item1.UserId)
+        @Html.HiddenFor(model => model.Item1.Title)
     </fieldset>
 }
 
@@ -52,6 +53,8 @@
 
             <div class="editor-label">
                 @Html.LabelFor(model => model.Item2.MessageBody)
+               
+                
             </div>
             @*<div class="editor-field">
                 @Html.EditorFor(model => model.Item2.MessageBody)
