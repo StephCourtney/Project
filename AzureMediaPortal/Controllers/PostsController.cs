@@ -9,33 +9,35 @@ using AzureMediaPortal.Models;
 
 namespace AzureMediaPortal.Controllers
 {
-    public class CommentsController : Controller
+    [Authorize]
+    public class PostsController : Controller
     {
         private AzureMediaPortalContext db = new AzureMediaPortalContext();
 
         //
-        // GET: /Comments/
+        // GET: /Posts/
 
         public ActionResult Index()
         {
-            return View(db.Comments.ToList());
+
+            return View(db.Posts.ToList());
         }
 
         //
-        // GET: /Comments/Details/5
+        // GET: /Posts/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
+            Post post = db.Posts.Find(id);
+            if (post == null)
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            return View(post);
         }
 
         //
-        // GET: /Comments/Create
+        // GET: /Posts/Create
 
         public ActionResult Create()
         {
@@ -43,76 +45,75 @@ namespace AzureMediaPortal.Controllers
         }
 
         //
-        // POST: /Comments/Create
+        // POST: /Posts/Create
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Comment comment)
+        public ActionResult Create(Post post)
         {
             if (ModelState.IsValid)
             {
-                comment.UserID = User.Identity.Name;
-                comment.CommentTime = DateTime.Now.ToString("dd MMM yyyy HH:mm:ss");
-                
-                db.Comments.Add(comment);
+               
+                db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(comment);
+            return View(post);
         }
 
         //
-        // GET: /Comments/Edit/5
+        // GET: /Posts/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
+            
+            Post post = db.Posts.Find(id);
+            if (post == null)
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            return View(post);
         }
 
         //
-        // POST: /Comments/Edit/5
+        // POST: /Posts/Edit/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Comment comment)
+        public ActionResult Edit(Post post)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(comment).State = EntityState.Modified;
+                db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(comment);
+            return View(post);
         }
 
         //
-        // GET: /Comments/Delete/5
+        // GET: /Posts/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
+            Post post = db.Posts.Find(id);
+            if (post == null)
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            return View(post);
         }
 
         //
-        // POST: /Comments/Delete/5
+        // POST: /Posts/Delete/5
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Comment comment = db.Comments.Find(id);
-            db.Comments.Remove(comment);
+            Post post = db.Posts.Find(id);
+            db.Posts.Remove(post);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

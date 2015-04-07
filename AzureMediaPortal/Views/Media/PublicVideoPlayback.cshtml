@@ -1,0 +1,87 @@
+﻿@model Tuple<AzureMediaPortal.Models.MediaElement, AzureMediaPortal.Models.Post>
+
+@{
+    ViewBag.Title = @Html.DisplayFor(model => model.Item1.Title);
+}
+
+<h2>@Html.DisplayFor(model => model.Item1.Title)</h2>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>MediaElement</legend>
+        @Html.HiddenFor(model => model.Item1.Id)
+        @Html.HiddenFor(model => model.Item1.AssetId)
+        @Html.HiddenFor(model => model.Item1.FileUrl, new { id = "fileUrl" })
+        @Html.HiddenFor(model => model.Item1.UserId)
+        @Html.HiddenFor(model => model.Item1.Title)
+    </fieldset>
+}
+
+
+<div>
+    <div id="videoPlayer"></div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<div>
+    <h2>Comments</h2>
+    <div style="background-color: #DDEBEE; width: 70%">
+        <table>
+            @foreach (var item in ViewBag.Posts) 
+            {
+                <tr>
+                    <td>@item.MessageBody</td>
+                    <td><i>User: @item.UserID</i></td>
+                    <td><i>Time: @item.CommentTime</i></td> 
+                </tr> 
+            }
+        </table>
+     
+       <p style="float:right;"> @Html.ActionLink("Edit your comments", "Index", "Posts")</p>
+    
+    </div>
+  
+       @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Item2.MessageBody)
+               
+                
+            </div>
+            @*<div class="editor-field">
+                @Html.EditorFor(model => model.Item2.MessageBody)
+                @Html.ValidationMessageFor(model => model.Item2.MessageBody)
+            </div>*@
+
+            <div class="editor-field">
+                <input class="text-box single-line" id="MessageBody" name="MessageBody" type="text" value="">
+                <span class="field-validation-valid" data-valmsg-for="MessageBody" data-valmsg-replace="true"></span>
+            </div>
+
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+        </fieldset>
+       }
+   
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/playerframework.min.js"></script>
+    <script src="~/Scripts/media-player.js"></script>
+    <script src="~/Scripts/media-upload.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        mediaPlayer.initFunction("videoPlayer", $("#fileUrl").val());
+    </script>
+}
+
+

@@ -16,20 +16,24 @@
         </div>
     </section>
 }
-<p>
 
-    @using (Html.BeginForm()) {
-        <p style="float:right">
-            Search: @Html.TextBox("SearchString")
-            <input type="submit" value="Filter" />
-        </p>
-    }
-    </p>
+<div style="float:right;">
+        @using (Html.BeginForm()) 
+        {
+            <div>
+                Search: @Html.TextBox("SearchString")
+                <input type="image" title="Search" src="~/Images/search.png" style="border:none; width:30px; height:30px; float:right;" />
+            </div>
+        
+        }
+        
+</div>
+    
 <table>
     @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.ActionLink(@item.Title, "WatchPublic", new { id = item.Id })
+                @Html.ActionLink(@item.Title, "PublicVideoPlayback", new { id = item.Id })
                 
             </td>
         </tr>

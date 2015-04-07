@@ -7,6 +7,7 @@ using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.IO;
@@ -24,51 +25,45 @@ namespace AzureMediaPortal.Controllers
 
         
         // GET: /Media/
-        //Return media elements for secified user and list them
+        // Return media elements for secified user and list them
+        // Will be seen when the user clicks on the "My Videos" tab
         [Authorize]
         public ActionResult Index()
         {
             return View(db.MediaElements.Where(m => m.UserId == User.Identity.Name).ToList());
-           
-          
+
         }
         
-        
+        // Returns all of the public videos when no search paramter
+        // has been entered, otherwise returns the videos with a 
+        // title that matches the search parameter.
+        // case in-sensitive
         public ActionResult PublicVideos(string searchString)
         {
-            //search functionality, ignores case
             if (String.IsNullOrEmpty(searchString)) 
             {
                 return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
             }
-            else 
+            else
             {
                 return View(db.MediaElements.Where(v => v.Title.ToLower().Contains(searchString.ToLower()) && v.IsPublic.Equals(true)).ToList());
             }
+          
         }
         
         // GET: /Media/Details/
         //Return the selected media element and show details 
-        [Authorize]
-        public ActionResult Details(int id = 0)
-        {
-            MediaElement mediaelement = db.MediaElements.FirstOrDefault(m => m.UserId == User.Identity.Name && m.Id == id);
-            if (mediaelement == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mediaelement);
-        }
+        //[Authorize]
+        //public ActionResult Details(int id = 0)
+        //{
+        //    MediaElement mediaelement = db.MediaElements.FirstOrDefault(m => m.UserId == User.Identity.Name && m.Id == id);
+        //    if (mediaelement == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(mediaelement);
+        //}
 
-        
-        // GET: /Media/Create
-        [Authorize]
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        
         // POST: /Media/Create
         //Save the new media element to the database
         [HttpPost]
@@ -101,13 +96,6 @@ namespace AzureMediaPortal.Controllers
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
                 mediaelement.VideoPost = new List<Post>();
-                //Post vp = new Post { UserID = User.Identity.Name, MessageBody = "" };
-                //vp.Replies = new List<Comment>();
-                //Comment c = new Comment { UserID = User.Identity.Name, CommentText = "Ok, video to follow" };
-                //vp.Replies.Add(c);
-                //mediaelement.VideoPost.Add(vp);
-                //vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "" };
-                //mediaelement.VideoPost.Add(vp);
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
                 
@@ -180,24 +168,55 @@ namespace AzureMediaPortal.Controllers
             return View(mediaelement);
         }
 
-        public ActionResult WatchPublic(int id = 0) {
+
+        // POST: Saves comments to the db including the time and loads the 
+        //       selected video based on the id
+        public ActionResult PublicVideoPlayback(int id = 0) 
+        {
             MediaElement mediaelement = db.MediaElements.Find(id);
             ViewBag.Posts = db.Posts.Where(p => p.VideoID == id).ToList();
+            var view1 = mediaelement;
+            var view2 = new Post();
             if (mediaelement == null) {
                 return HttpNotFound();
             }
             if (string.IsNullOrEmpty(mediaelement.FileUrl)) 
             {
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
+                
                 db.SaveChanges();
             }
-
-            Post vp = new Post { UserID = User.Identity.Name, Replies = null, MessageBody = "" };
-            //mediaelement.VideoPost.Add(vp);
-
-            return View(mediaelement);
+            return View(Tuple.Create(view1, view2));
         }
-        
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult PublicVideoPlayback(Post post, MediaElement media) 
+        {
+            if (ModelState.IsValid) 
+            {
+                post.UserID = User.Identity.Name;
+                post.VideoID = media.Id;
+                post.VideoTitle = VideoTitle(media.Id);
+               // System.Diagnostics.Debug.WriteLine("Title: " + media.Title);
+                post.CommentTime = DateTime.Now.ToString("HH:mm, dd MMM yy");
+               // post.CommentTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("HH:mm, dd MMM yy");
+                db.Posts.Add(post);
+                db.SaveChanges();
+                return RedirectToAction("PublicVideoPlayback");
+            }
+
+            return View();
+        }
+
+        public string VideoTitle(int vidID) 
+        {
+            MediaElement m = db.MediaElements.Find(vidID);
+            return m.Title;
+        }
+
+
         // POST: /Media/Edit/5
         // TODO: add string to post object, save to db
         [HttpPost]
@@ -350,7 +369,7 @@ namespace AzureMediaPortal.Controllers
                 string.Concat((fileSizeInKb / 1024).ToString(CultureInfo.CurrentCulture), " MB") :
                 string.Concat(fileSizeInKb.ToString(CultureInfo.CurrentCulture), " KB");
                 model.UploadStatusMessage = "File uploaded successfully";
-               // Image greenTick = Image.FromFile("~Images/greenTick.png");
+              
                 CreateMediaAsset(model);
             }
             catch (StorageException e)
