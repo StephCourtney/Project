@@ -25,7 +25,7 @@ namespace AzureMediaPortal
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/zocial.css",
-                "~/Content/site.css",
+                "~/Content/Site.css",
                 "~/Content/playerframework.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(

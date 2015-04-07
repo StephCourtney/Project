@@ -8,12 +8,7 @@
 
 <table>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsPublic)
-        </th>
+       
        
     </tr>
     <form action="Upload">
@@ -23,13 +18,17 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(@item.Title, "Edit", new { id=item.Id }) 
+            @Html.ActionLink(@item.Title, "Edit", new { id = item.Id }, new { @class = "videoPic" })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsPublic)
+           
         </td>
         <td>
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <b>@Html.ActionLink(@item.Title, "Edit", new { id = item.Id }, new { @class = "videoLink" })</b>
+            @*@Html.Label("By: " + @item.UserId)*@
+            <i>@Html.Label("Uploaded: " + @item.UploadTime)</i>
+            Viewable to Public: @Html.DisplayFor(model => item.IsPublic)
+           <br> @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteLink" })
         </td>
         
     </tr>

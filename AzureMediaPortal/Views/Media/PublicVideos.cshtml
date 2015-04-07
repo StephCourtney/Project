@@ -33,13 +33,15 @@
     @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.ActionLink(@item.Title, "PublicVideoPlayback", new { id = item.Id })
-                
+                @Html.ActionLink(@item.Title, "PublicVideoPlayback", new { id = item.Id }, new { @class="videoPic"})
             </td>
+            <td>
+               <b>@Html.ActionLink(@item.Title, "PublicVideoPlayback", new { id = item.Id }, new { @class="videoLink"})</b>
+                @Html.Label("By: " + @item.UserId)
+               <i>@Html.Label("Uploaded: " + @item.UploadTime)</i>
+            </td>
+           
         </tr>
     }
-
-  
-        
 
 </table>

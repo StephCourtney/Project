@@ -5,6 +5,7 @@
     <title>@ViewBag.Title - Watch and Learn</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
+    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
     @Styles.Render("~/Content/css")
     <link href="~/Content/playerframework.min.css" rel="stylesheet" />
     @Styles.Render("~/Content/themes/base/css")
@@ -17,7 +18,6 @@
     <header>
         <div class="content-wrapper">
             <div class="float-left">
-                
                 <p class="site-title"><img src="~/Images/Weights-Icon-Small.png" />@Html.ActionLink("Watch and Learn", "Index", "Home")</p>
             </div>
             <div class="float-right">

@@ -293,6 +293,8 @@
     <Content Include="Images\logout.png" />
     <Content Include="Images\search.png" />
     <Content Include="Images\upload.png" />
+    <Content Include="Images\video.png" />
+    <Content Include="Images\weightlifting-wallpapers.jpg" />
     <Content Include="Images\Weights-Icon-2-tone1.png" />
     <Content Include="Images\Weights-Icon-Small.png" />
     <Content Include="Scripts\jquery-2.1.3.js" />
