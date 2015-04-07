@@ -291,6 +291,7 @@
     <Content Include="Images\facebook.png" />
     <Content Include="Images\greenTick.png" />
     <Content Include="Images\logout.png" />
+    <Content Include="Images\search.png" />
     <Content Include="Images\upload.png" />
     <Content Include="Images\Weights-Icon-2-tone1.png" />
     <Content Include="Images\Weights-Icon-Small.png" />
