@@ -5,14 +5,23 @@
     ViewBag.Title = "Public Videos";
 }
 @section featured {
-    <section class="featured">
+    <div class="featured">
         <div class="content-wrapper">
                 <div class="float-left">
                     <p class="site-title"><img src="~/Images/Weights-Icon-Small.png" />@Html.ActionLink("Watch and Learn", "Index", "Home")</p>
                     <h3 style="color:white;">Welcome to Watch and Learn. View and upload instructional exercise videos to aid in your fitness goals.</h3>
-                    <p>
-                        The below videos are public and can be watched without user login. If you wish to share a video please @Html.ActionLink("Login", "Login", "Account") or @Html.ActionLink("Register", "Register", "Account") if you do not already have an account.
-                    </p>
+                    @if (Request.IsAuthenticated) 
+                    {
+                        <p>Hi @User.Identity.Name, You can add, edit and delete your videos in the @Html.ActionLink("My Videos", "Index", "Media") section. Now that you are logged int, you will also be able to make comments on
+                            videos that other users have uploaded. Have fun!</p>
+                    }
+                    else 
+                    {
+                        <p>
+                            The below videos are public and can be watched without user login. If you wish to share a video please @Html.ActionLink("Login", "Login", "Account") or @Html.ActionLink("Register", "Register", "Account") if you do not already have an account.
+                        </p>
+                    }
+                    
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -31,7 +40,7 @@
                
             </hgroup>
         </div>
-    </section>
+    </div>
 }
 
 <div style="float:right;">
@@ -46,19 +55,23 @@
         
 </div>
     
-<table>
+<div style="flex-wrap: wrap; display: inline-flex;">
     @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.ActionLink(@item.Title, "PublicVideoPlayback", new { id = item.Id }, new { @class="videoPic"})
-            </td>
-            <td>
-               <b>@Html.ActionLink(@item.Title, "PublicVideoPlayback", new { id = item.Id }, new { @class="videoLink"})</b>
-                @Html.Label("By: " + @item.UserId)
-               <i>@Html.Label("Uploaded: " + @item.UploadTime)</i>
-            </td>
-           
-        </tr>
-    }
+        <table>
+            <tr>
 
-</table>
+            <td>
+                @Html.ActionLink(@item.Title, "PublicVideoPlayback", new { id = item.Id }, new { @class = "videoPic" })
+            </td>
+            <td>
+                <b>@Html.ActionLink(@item.Title, "PublicVideoPlayback", new { id = item.Id }, new { @class = "videoLink" })</b>
+                @Html.Label("By: " + @item.UserId)
+                <i>@Html.Label("Uploaded: " + @item.UploadTime)</i>
+            </td>
+
+            </tr>
+        </table>
+    }
+    </div>
+
+
