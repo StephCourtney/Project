@@ -7,12 +7,29 @@
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title"><img src="~/Images/Weights-Icon-Small.png" />@Html.ActionLink("Watch and Learn", "Index", "Home")</p>
+                    <h3 style="color:white;">Welcome to Watch and Learn. View and upload instructional exercise videos to aid in your fitness goals.</h3>
+                    <p>
+                        The below videos are public and can be watched without user login. If you wish to share a video please @Html.ActionLink("Login", "Login", "Account") or @Html.ActionLink("Register", "Register", "Account") if you do not already have an account.
+                    </p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+                            <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+                            @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
+                            <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+                        </ul>
+                    </nav>
+                </div>
             <hgroup class="title">
-                <h2>Welcome to Watch and Learn. View and upload instructional exercise videos to aid in your fitness goals.</h2>
+               
             </hgroup>
-            <p>
-                The below videos are public and can be watched without user login. If you wish to share a video please @Html.ActionLink("Login", "Login", "Account") or @Html.ActionLink("Register", "Register", "Account") if you do not already have an account.
-            </p>
         </div>
     </section>
 }

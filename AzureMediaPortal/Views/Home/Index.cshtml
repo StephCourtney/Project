@@ -2,12 +2,31 @@
 @{
     ViewBag.Title = "Home";
 }
+
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
-            <hgroup class="title">
-                <h2>@ViewBag.Message</h2>
-            </hgroup>
+            <div class="float-left">
+                <p class="site-title"><img src="~/Images/Weights-Icon-Small.png" />@Html.ActionLink("Watch and Learn", "Index", "Home")</p>
+                <h3 style="color:white;">Welcome to Watch and Learn. View and upload instructional exercise videos to aid in your fitness goals.</h3>
+                <p>
+                    <br>
+                </p>
+            </div>
+            <div class="float-right">
+                <section id="login">
+                    @Html.Partial("_LoginPartial")
+                </section>
+                <nav>
+                    <ul id="menu">
+                        <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+                        <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+                        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
+                        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+                    </ul>
+                </nav>
+            </div>
+            <hgroup class="title"></hgroup>
         </div>
     </section>
 }

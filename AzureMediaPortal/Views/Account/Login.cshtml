@@ -4,10 +4,31 @@
     ViewBag.Title = "Log in";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
-
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p class="site-title"><img src="~/Images/Weights-Icon-Small.png" />@Html.ActionLink("Watch and Learn", "Index", "Home")</p>
+                <h3 style="color:white;">Welcome to Watch and Learn. View and upload instructional exercise videos to aid in your fitness goals.</h3>
+                <p>
+                    Please login by using your username and password or you can choose to login with Facebook.
+                </p>
+            </div>
+            <div class="float-right">
+               
+                <nav>
+                    <ul id="menu">
+                        <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+                        <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+                        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
+                        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+                    </ul>
+                </nav>
+            </div>
+            <hgroup class="title"></hgroup>
+        </div>
+    </section>
+}
 <section id="loginForm">
 <h2>Use a local account to log in.</h2>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {

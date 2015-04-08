@@ -6,14 +6,26 @@
 
 <h2>My Videos</h2>
 
+    <nav>
+        <ul id="menu" style="float:right;">
+            <section id="login">
+                @Html.Partial("_LoginPartial")
+            </section>
+            <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+            <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+            @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
+            <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+        </ul>
+    </nav>
+<br><p>The videos you have uploaded are displayed below. Please click on the video to edit details.</p> 
+<br>
+<div style="float:right;">
+<form action="Upload">
+    <input type="image" title="Upload new video" src="~/Images/upload.png" style="border:none; width:40px; height:40px;" />
+</form> 
+    </div>
 <table>
-    <tr>
-       
-       
-    </tr>
-    <form action="Upload">
-        <input type="image" title="Upload new video" src="~/Images/upload.png" style="border:none; width:40px; height:40px; float:right;" />
-    </form>  
+ 
     
 @foreach (var item in Model) {
     <tr>
@@ -34,6 +46,6 @@
     </tr>
 }
 </table>
-
+ 
 
 

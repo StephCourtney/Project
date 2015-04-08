@@ -15,7 +15,7 @@
     <link href='http://fonts.googleapis.com/css?family=Snippet' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <header>
+    @*<header>
         <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title"><img src="~/Images/Weights-Icon-Small.png" />@Html.ActionLink("Watch and Learn", "Index", "Home")</p>
@@ -29,12 +29,12 @@
                         <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
                         <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
                         @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
-                        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+                        @*<li>@Html.ActionLink("About", "Index", "Home")</li>Home Controller
                     </ul>
                 </nav>
             </div>
         </div>
-    </header>
+    </header>*@
     <div id="body">
         @RenderSection("featured", required: false)
         <section class="content-wrapper main-content clear-fix">
