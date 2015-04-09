@@ -165,6 +165,18 @@ footer {
     text-decoration: none;
 }
 
+.name {
+     color: blueviolet;
+    font-family: 'Snippet', cursive;
+    font-size: 3em;
+}
+
+.haveFun {
+     color:#21d857;
+    font-family: 'Snippet', cursive;
+    font-size: 3em;
+}
+
 
 /* login
 ----------------------------------------------------------*/

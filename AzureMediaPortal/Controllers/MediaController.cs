@@ -94,6 +94,7 @@ namespace AzureMediaPortal.Controllers
             try
             {
                 mediaelement.UserId = User.Identity.Name;
+                
                 mediaelement.UploadTime = DateTime.Now.ToString("HH:mm, dd MMM yy");
                 System.Diagnostics.Debug.WriteLine("Time: "+mediaelement.UploadTime);
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);

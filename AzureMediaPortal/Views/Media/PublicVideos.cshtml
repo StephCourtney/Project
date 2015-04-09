@@ -12,8 +12,8 @@
                     <h3 style="color:white;">Welcome to Watch and Learn. View and upload instructional exercise videos to aid in your fitness goals.</h3>
                     @if (Request.IsAuthenticated) 
                     {
-                        <p>Hi @User.Identity.Name, You can add, edit and delete your videos in the @Html.ActionLink("My Videos", "Index", "Media") section. Now that you are logged int, you will also be able to make comments on
-                            videos that other users have uploaded. Have fun!</p>
+                        <p>Hi <span class="name">@User.Identity.Name</span> You can add, edit and delete your videos in the @Html.ActionLink("My Videos", "Index", "Media") section. Now that you are logged int, you will also be able to make comments on
+                            videos that other users have uploaded. <span class="haveFun">Have fun!</span></p>
                     }
                     else 
                     {
@@ -31,7 +31,6 @@
                         <ul id="menu">
                             <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
                             <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
-                            @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
                             <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
                         </ul>
                     </nav>
