@@ -34,68 +34,69 @@ namespace AzureMediaPortal.Controllers
             return View(v);
         }
         
-        // Returns all of the public videos when no search paramter
-        // has been entered, otherwise returns the videos with a 
-        // title that matches the search parameter.
-        // case in-sensitive, ordered by title
+        // GET: Media/PublicVideos
+        // Returns all of the public videos when no search parameter
+        // has been entered and on first load.
+        // Ordered by title A-Z
         [HttpGet]
-        public ActionResult PublicVideos() {
-
-           
-                var v = db.MediaElements.OrderBy(t => t.Title).Where(m => m.IsPublic.Equals(true)).ToList();
-                return View(v);
-
+        public ActionResult PublicVideos() 
+        {
+           var v = db.MediaElements.OrderBy(t => t.Title).Where(m => m.IsPublic.Equals(true)).ToList();
+           return View(v);
         }
+        // POST: Media/PublicVideos
+        // Returns search results. Case insensitive 
+        // Ordered by title A-Z
         [HttpPost]
-        public ActionResult PublicVideos(string SearchString) {
+        public ActionResult PublicVideos(string SearchString) 
+        {
             List<MediaElement> videos;
-            if (String.IsNullOrEmpty(SearchString)) {
+            if (String.IsNullOrEmpty(SearchString)) 
+            {
                 videos = db.MediaElements.OrderBy(t => t.Title).Where(m => m.IsPublic.Equals(true)).ToList();
-               // var v = db.MediaElements.OrderBy(t => t.Title).Where(m => m.IsPublic.Equals(true)).ToList();
-               // return View(v);
             }
-            else {
+            else 
+            {
                 videos = db.MediaElements.Where(v => v.Title.StartsWith(SearchString) && v.IsPublic.Equals(true)).ToList();
            
             }
             return View(videos);
         }
 
-        //TODO: Get lest to display in search box
-        public JsonResult GetSearchList(string term) {
+        // TODO: Get list to display in search box
+        // Used for search box autocomplete
+        // currently returning data from endpoint but not displaying in textbox
+        public JsonResult GetSearchList(string term) 
+        {
             List<string> videos;
             videos = db.MediaElements.Where(v => v.Title.StartsWith(term) && v.IsPublic.Equals(true))
                 .Select(n => n.Title).ToList();
-            foreach (var item in videos) {
-                System.Diagnostics.Debug.WriteLine("entry");
-            }
             return Json(videos, JsonRequestBehavior.AllowGet);
         }
         
 
         // POST: /Media/Create
-        //Save the new media element to the database
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public ActionResult Create(MediaElement mediaelement)
-        {
-            if (ModelState.IsValid)
-            {
-                
-                mediaelement.UserId = User.Identity.Name;
-               
-                db.MediaElements.Add(mediaelement);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        // Save the new media element to the database
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        //public ActionResult Create(MediaElement mediaelement)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        mediaelement.UserId = User.Identity.Name;
+        //        db.MediaElements.Add(mediaelement);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(mediaelement);
+        //}
 
-            return View(mediaelement);
-        }
-
-
-        //get the metadata and save it with the new element
-        //TODO: Save videoId... etc
+        // POST: 
+        // Create a new posts section for the video,
+        // add the time and streamingurl information to the mediaelement
+        // save the mediaelement to the database
+        // return saved to the screen on successful save
         [Authorize]
         [HttpPost]
         public JsonResult Save(MediaElement mediaelement)
@@ -104,12 +105,10 @@ namespace AzureMediaPortal.Controllers
             {
                 mediaelement.UserId = User.Identity.Name;
                 mediaelement.UploadTime = DateTime.Now.ToString("HH:mm, dd MMM yy");
-                System.Diagnostics.Debug.WriteLine("Time: "+mediaelement.UploadTime);
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
                 mediaelement.VideoPost = new List<Post>();
                 db.MediaElements.Add(mediaelement);
                 db.SaveChanges();
-                
                 return Json(new { Saved = true, StreamingUrl =  mediaelement.FileUrl});
             }
             catch (Exception)
@@ -118,7 +117,9 @@ namespace AzureMediaPortal.Controllers
             }
         }
 
-        //generate the streamingurl and locator for the asset, at the moment only works with mp4
+        // Create the url to access the video. 
+        // Creates an access policy which states how long the video can be watched (a year)
+        // takes in the assetID as a parameter and finds it in the users list of videos
         [Authorize]
         private string GetStreamingUrl(string assetId)
         {
@@ -154,8 +155,7 @@ namespace AzureMediaPortal.Controllers
                 mp4Uri.Path += "/" + streamingAssetFile.Name;
                 streamingUrl = mp4Uri.ToString();
             }
-            Console.Write(streamingUrl);
-           // Console.ReadLine();
+            System.Diagnostics.Debug.WriteLine(streamingUrl);
             return streamingUrl;
         }
 

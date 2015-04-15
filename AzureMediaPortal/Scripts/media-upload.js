@@ -18,7 +18,7 @@ $(document).ready(function ()
 
 $(document).ready(function () {
     $("#searchValue").autocomplete({
-        source: Url.Action("GetSearchList", "Media")
+        source: Url.Action("Media/GetSearchList")
     });
 });
 
