@@ -1,13 +1,14 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png"
-          href="http://example.com/image.png" />
+    <link rel="icon" type="image/png"href="http://example.com/image.png" />
     <meta charset="utf-8" />
     <title>@ViewBag.Title - Watch and Learn</title>
     <link href="~/Images/Weights-Icon-Small.png" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/jquery")
+    @Styles.Render("~/bundles/jqueryui")
     <link href="~/Content/playerframework.min.css" rel="stylesheet" />
     @Styles.Render("~/Content/themes/base/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -16,26 +17,6 @@
     <link href='http://fonts.googleapis.com/css?family=Snippet' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    @*<header>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p class="site-title"><img src="~/Images/Weights-Icon-Small.png" />@Html.ActionLink("Watch and Learn", "Index", "Home")</p>
-            </div>
-            <div class="float-right">
-                <section id="login">
-                    @Html.Partial("_LoginPartial")
-                </section>
-                <nav>
-                    <ul id="menu">
-                        <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
-                        <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
-                        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
-                        @*<li>@Html.ActionLink("About", "Index", "Home")</li>Home Controller
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>*@
     <div id="body">
         @RenderSection("featured", required: false)
         <section class="content-wrapper main-content clear-fix">

@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<AzureMediaPortal.Models.MediaElement> 
 
-
 @{
     ViewBag.Title = "Public Videos";
 }
@@ -31,7 +30,7 @@
                         <ul id="menu">
                             <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
                             <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
-                            <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+                            <li>@Html.ActionLink("About", "Index", "Home")</li>
                         </ul>
                     </nav>
                 </div>
@@ -46,21 +45,17 @@
         @using (Html.BeginForm()) 
         {
             <div>
-                Search: @Html.TextBox("SearchString")
+                Search: @Html.TextBox("SearchString", null, new { placeholder = "Search by Title", id = "searchValue"})
                 <input type="image" title="Search" src="~/Images/search.png" style="border:none; width:30px; height:30px; float:right;" />
             </div>
         
         }
         
 </div>
-    @*TODO: try fix days ago*@
+   
 <div style="flex-wrap: wrap; display: inline-flex;">
     @foreach (var item in Model) {
-        DateTime dt = Convert.ToDateTime(@item.UploadTime);
-        DateTime now = DateTime.Now;
-        TimeSpan difference = now.Subtract(dt);
-        //string diff = difference.ToString("%d" + " days");
-       // System.Diagnostics.Debug.WriteLine("Diff:  "+diff);
+       
         <table>
             <tr>
 
@@ -79,4 +74,10 @@
     }
     </div>
 
+@section Scripts {
 
+   @*@Scripts.Render("~/bundles/jqueryval")*@
+    @*<script src="~/Scripts/media-upload.js"></script>
+    
+    <script src="~/Scripts/jquery-ui-1.8.24.js"></script>*@
+}

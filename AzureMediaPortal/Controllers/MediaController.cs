@@ -38,32 +38,40 @@ namespace AzureMediaPortal.Controllers
         // has been entered, otherwise returns the videos with a 
         // title that matches the search parameter.
         // case in-sensitive, ordered by title
-        public ActionResult PublicVideos(string searchString){
-        
-            if (String.IsNullOrEmpty(searchString)) 
-            {
+        [HttpGet]
+        public ActionResult PublicVideos() {
+
+           
                 var v = db.MediaElements.OrderBy(t => t.Title).Where(m => m.IsPublic.Equals(true)).ToList();
                 return View(v);
+
+        }
+        [HttpPost]
+        public ActionResult PublicVideos(string SearchString) {
+            List<MediaElement> videos;
+            if (String.IsNullOrEmpty(SearchString)) {
+                videos = db.MediaElements.OrderBy(t => t.Title).Where(m => m.IsPublic.Equals(true)).ToList();
+               // var v = db.MediaElements.OrderBy(t => t.Title).Where(m => m.IsPublic.Equals(true)).ToList();
+               // return View(v);
             }
-            else
-            {
-                return View(db.MediaElements.Where(v => v.Title.ToLower().Contains(searchString.ToLower()) && v.IsPublic.Equals(true)).ToList());
+            else {
+                videos = db.MediaElements.Where(v => v.Title.StartsWith(SearchString) && v.IsPublic.Equals(true)).ToList();
+           
             }
-          
+            return View(videos);
+        }
+
+        //TODO: Get lest to display in search box
+        public JsonResult GetSearchList(string term) {
+            List<string> videos;
+            videos = db.MediaElements.Where(v => v.Title.StartsWith(term) && v.IsPublic.Equals(true))
+                .Select(n => n.Title).ToList();
+            foreach (var item in videos) {
+                System.Diagnostics.Debug.WriteLine("entry");
+            }
+            return Json(videos, JsonRequestBehavior.AllowGet);
         }
         
-        // GET: /Media/Details/
-        //Return the selected media element and show details 
-        //[Authorize]
-        //public ActionResult Details(int id = 0)
-        //{
-        //    MediaElement mediaelement = db.MediaElements.FirstOrDefault(m => m.UserId == User.Identity.Name && m.Id == id);
-        //    if (mediaelement == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(mediaelement);
-        //}
 
         // POST: /Media/Create
         //Save the new media element to the database

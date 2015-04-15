@@ -13,8 +13,7 @@
             </section>
             <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
             <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
-            @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
-            <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+            <li>@Html.ActionLink("About", "Index", "Home")</li>
         </ul>
     </nav>
 <br><p>The videos you have uploaded are displayed below. Please click on the video to edit details.</p> 
@@ -37,7 +36,6 @@
         </td>
         <td>
             <b>@Html.ActionLink(@item.Title, "Edit", new { id = item.Id }, new { @class = "videoLink" })</b>
-            @*@Html.Label("By: " + @item.UserId)*@
             <i>@Html.Label("Uploaded: " + @item.UploadTime)</i>
             Viewable to Public: @Html.DisplayFor(model => item.IsPublic)
            <br> @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteLink" })
