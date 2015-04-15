@@ -30,19 +30,20 @@ namespace AzureMediaPortal.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return View(db.MediaElements.Where(m => m.UserId == User.Identity.Name).ToList());
-
+            var v = db.MediaElements.OrderBy(t => t.Title).Where(m => m.UserId == User.Identity.Name).ToList();
+            return View(v);
         }
         
         // Returns all of the public videos when no search paramter
         // has been entered, otherwise returns the videos with a 
         // title that matches the search parameter.
-        // case in-sensitive
-        public ActionResult PublicVideos(string searchString)
-        {
+        // case in-sensitive, ordered by title
+        public ActionResult PublicVideos(string searchString){
+        
             if (String.IsNullOrEmpty(searchString)) 
             {
-                return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
+                var v = db.MediaElements.OrderBy(t => t.Title).Where(m => m.IsPublic.Equals(true)).ToList();
+                return View(v);
             }
             else
             {
@@ -94,7 +95,6 @@ namespace AzureMediaPortal.Controllers
             try
             {
                 mediaelement.UserId = User.Identity.Name;
-                
                 mediaelement.UploadTime = DateTime.Now.ToString("HH:mm, dd MMM yy");
                 System.Diagnostics.Debug.WriteLine("Time: "+mediaelement.UploadTime);
                 mediaelement.FileUrl = GetStreamingUrl(mediaelement.AssetId);
@@ -202,9 +202,7 @@ namespace AzureMediaPortal.Controllers
                 post.UserID = User.Identity.Name;
                 post.VideoID = media.Id;
                 post.VideoTitle = VideoTitle(media.Id);
-               // System.Diagnostics.Debug.WriteLine("Title: " + media.Title);
                 post.CommentTime = DateTime.Now.ToString("HH:mm, dd MMM yy");
-               // post.CommentTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("HH:mm, dd MMM yy");
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("PublicVideoPlayback");

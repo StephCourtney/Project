@@ -12,7 +12,7 @@
                     <h3 style="color:white;">Welcome to Watch and Learn. View and upload instructional exercise videos to aid in your fitness goals.</h3>
                     @if (Request.IsAuthenticated) 
                     {
-                        <p>Hi <span class="name">@User.Identity.Name</span> You can add, edit and delete your videos in the @Html.ActionLink("My Videos", "Index", "Media") section. Now that you are logged int, you will also be able to make comments on
+                        <p>Hi <span class="name">@User.Identity.Name</span> You can add, edit and delete your videos in the @Html.ActionLink("My Videos", "Index", "Media") section. Now that you are logged in, you will also be able to make comments on
                             videos that other users have uploaded. <span class="haveFun">Have fun!</span></p>
                     }
                     else 
@@ -53,9 +53,14 @@
         }
         
 </div>
-    
+    @*TODO: try fix days ago*@
 <div style="flex-wrap: wrap; display: inline-flex;">
     @foreach (var item in Model) {
+        DateTime dt = Convert.ToDateTime(@item.UploadTime);
+        DateTime now = DateTime.Now;
+        TimeSpan difference = now.Subtract(dt);
+        //string diff = difference.ToString("%d" + " days");
+       // System.Diagnostics.Debug.WriteLine("Diff:  "+diff);
         <table>
             <tr>
 
@@ -65,6 +70,7 @@
             <td>
                 <b>@Html.ActionLink(@item.Title, "PublicVideoPlayback", new { id = item.Id }, new { @class = "videoLink" })</b>
                 @Html.Label("By: " + @item.UserId)
+             
                 <i>@Html.Label("Uploaded: " + @item.UploadTime)</i>
             </td>
 
