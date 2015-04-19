@@ -47,9 +47,24 @@
             <div>
                 Search: @Html.TextBox("SearchString", null, new { placeholder = "Search by Title", id = "searchValue"})
                 <input type="image" title="Search" src="~/Images/search.png" style="border:none; width:30px; height:30px; float:right;" />
+               
             </div>
-        
+
+    @*<form action="/Media/sortSelector" method="get">
+
+        <fieldset>
+            Sort By: <select id="sortType" name="sortType">
+                <option value=""></option>
+                <option value="0">Alphbetical</option>
+                <option value="1">User</option>
+                <option selected="selected" value="2">Last Uploaded</option>
+            </select>
+            <input type="submit" value="Submit" />
+        </fieldset>
+    </form>*@
+
         }
+    
         
 </div>
    
@@ -76,8 +91,8 @@
 
 @section Scripts {
 
-   @*@Scripts.Render("~/bundles/jqueryval")*@
-    @*<script src="~/Scripts/media-upload.js"></script>
-    
-    <script src="~/Scripts/jquery-ui-1.8.24.js"></script>*@
+   @Scripts.Render("~/bundles/jquery")
+   @Scripts.Render("~/bundles/jqueryui")
+    <script src="~/Scripts/media-upload.js"></script>
+    <link href="~/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet" />
 }

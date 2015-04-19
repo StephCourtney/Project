@@ -73,6 +73,25 @@ namespace AzureMediaPortal.Controllers
                 .Select(n => n.Title).ToList();
             return Json(videos, JsonRequestBehavior.AllowGet);
         }
+
+        //public ActionResult sortSelector(int term) 
+        //{
+        //    List<string> selections = new List<string>();
+        //    selections.Add("By Date Uploaded");
+        //    List<MediaElement> videos = new List<MediaElement>();
+        //    if (term == 0) 
+        //    {
+
+        //        videos = db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList();
+        //    }
+        //    else if(term == 1)
+        //    {
+        //        videos = db.MediaElements.OrderBy(v => v.UserId).Where(m => m.IsPublic.Equals(true)).ToList();
+
+        //    }
+           
+        //    return View(videos);
+        //}
         
 
         // POST: /Media/Create
