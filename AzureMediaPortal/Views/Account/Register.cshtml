@@ -8,6 +8,18 @@
     <h2>Create a new account.</h2>
 </hgroup>
 
+<nav>
+    <ul id="menu" style="float:right;">
+        <section id="login">
+            @Html.Partial("_LoginPartial")
+        </section>
+        <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+        <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+        <li>@Html.ActionLink("About", "Index", "Home")</li>
+    </ul>
+</nav>
+<br>
+
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()

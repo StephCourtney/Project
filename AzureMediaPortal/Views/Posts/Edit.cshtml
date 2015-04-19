@@ -5,6 +5,18 @@
 }
 
 <h2>Edit</h2>
+<nav>
+    <ul id="menu" style="float:right;">
+        <section id="login">
+            @Html.Partial("_LoginPartial")
+        </section>
+        <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+        <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
+        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+    </ul>
+</nav>
+<br>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -14,6 +26,10 @@
         <legend>Post</legend>
 
         @Html.HiddenFor(model => model.PostID)
+        @Html.HiddenFor(model => model.VideoID)
+        @Html.HiddenFor(model => model.CommentTime)
+        @Html.HiddenFor(model => model.UserID)
+
 
         <div class="editor-label">
             @Html.LabelFor(model => model.VideoTitle)
@@ -21,14 +37,6 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.VideoTitle)
             @Html.ValidationMessageFor(model => model.VideoTitle)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.UserID)
-            @Html.ValidationMessageFor(model => model.UserID)
         </div>
 
         <div class="editor-label">

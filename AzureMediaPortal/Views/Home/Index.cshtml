@@ -2,12 +2,31 @@
 @{
     ViewBag.Title = "Home";
 }
+
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
-            <hgroup class="title">
-                <h2>@ViewBag.Message</h2>
-            </hgroup>
+            <div class="float-left">
+                <p class="site-title"><img src="~/Images/Weights-Icon-Small.png" />@Html.ActionLink("Watch and Learn", "Index", "Home")</p>
+                <h3 style="color:white;">Welcome to Watch and Learn. View and upload instructional exercise videos to aid in your fitness goals.</h3>
+                <p>
+                    <br>
+                </p>
+            </div>
+            <div class="float-right">
+                <section id="login">
+                    @Html.Partial("_LoginPartial")
+                </section>
+                <nav>
+                    <ul id="menu">
+                        <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+                        <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+                        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
+                        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+                    </ul>
+                </nav>
+            </div>
+            <hgroup class="title"></hgroup>
         </div>
     </section>
 }
@@ -15,17 +34,13 @@
 <h2>About this project</h2>
     <h3>The Idea</h3>
         <p>The chosen project is a video delivery service, which acts as an aid to trained professionals and people who can learn from them. 
-           This website demonstrates exercise videos which can be played pack by both members and non-members.</p>
+           This website demonstrates exercise videos which can be played back by both members and non-members.</p>
         <p>Personal Trainers and Fitness Instructors can use this service to deliver instructional videos to their clients.
            In future developments, clients will be able to request specific videos and micro payments will be implemented so the Trainers 
            and Instructors can be paid for their professional advice. Comments can be made under each video, if a user has questions they can
            be asked and answered here.</p>
         <p>Anyone can register an account for the site by using the account registration form or with a FaceBook account. Qulifications 
            and references will be checked when micro payments become active.</p>
-    <h3>The Technologies</h3>
-        <p>The website was developed using MVC4, C#, AJAX, JQuery and JSON. The website is deployed on Azure and all data is stored 
-           on Azure SQL. Azure media services is used to upload videos to Azure BLOB storage, from there the URL for the video is stored
-           in Azure SQL along with the video title, list of comments, if the video is public or private and is referenced via Foreign Key 
-           to the User Profile which uploaded it.</p>
+   
 
 

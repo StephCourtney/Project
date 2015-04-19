@@ -20,6 +20,8 @@ namespace AzureMediaPortal.Models
         public int VideoID { get; set;}
         [ForeignKey("VideoID")]
         public List<Post> VideoPost {get; set;}
+        [Display(Name = "Upload Time and Date")]
+        public string UploadTime { get; set; }
     }
 
 }

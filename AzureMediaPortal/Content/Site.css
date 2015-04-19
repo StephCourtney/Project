@@ -23,14 +23,31 @@ a {
 
     a:link, a:visited,
     a:active, a:hover {
-        color: #333;
+        color: khaki;
     }
 
-   
+    a.videoLink
+    {
+        color: #0072b1;
+        font-size:large;
+    }
+     a.deleteLink
+    {
+        color: #dd0404;
+        
+    }
     a:hover {
         background-color: #c7d1d6;
     }
 
+    a.videoPic
+{
+    background: url(../Images/video.png) no-repeat top left;
+     display: block;
+     width: 150px;
+     height: 130px;
+     text-indent: -9999px; /* hides the link text */
+}
 header, footer, hgroup,
 nav, section {
     display: block;
@@ -45,10 +62,13 @@ mark {
 .float-left {
     float: left;
 }
-
+/*Edited by Steph stop stay input stop right*/
 .float-right {
-    float: right;
-    padding-top: 55px;
+    /*float: right;*/
+    /*padding-top: 55px;*/
+    top: 0;
+    right: 0;
+    position:absolute;
 }
 
 .clear-fix:after {
@@ -97,7 +117,8 @@ h5, h6 {
 ----------------------------------------------------------*/
 .content-wrapper {
     margin: 0 auto;
-    max-width: 960px;
+    max-width: 80% !important;
+    
 }
 
 #body {
@@ -139,9 +160,24 @@ footer {
 
 .site-title a, .site-title a:hover, .site-title a:active {
     background: none;
-    color: #0d0b3c;
+    color: #33CFD0;
     outline: none;
     text-decoration: none;
+}
+
+.name {
+     color: blueviolet;
+    font-family: 'Snippet', cursive;
+    font-size: 3em;
+}
+
+.regPage {
+    font-size: 1.0em;
+}
+.haveFun {
+     color:#21d857;
+    font-family: 'Snippet', cursive;
+    font-size: 3em;
 }
 
 
@@ -156,7 +192,7 @@ footer {
 }
 
     #login a {
-        background-color: #d3dce0;
+       font-size: 14px;
         margin-left: 10px;
         margin-right: 3px;
         padding: 2px 3px;
@@ -200,7 +236,7 @@ ul#menu {
 
         ul#menu li a {
             background: none;
-            color: #999;
+            color: #33CFD0;
             text-decoration: none;
         }
 
@@ -214,16 +250,22 @@ ul#menu {
 ----------------------------------------------------------*/
 /* featured */
 .featured {
-    background-color: #fff;
+    /*background-color: #fff;*/
+    background-image: url(../Images/weightlifting-wallpapers.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 500px;
 }
 
     .featured .content-wrapper {
-        background-color: #000;
-        background-image: -ms-linear-gradient(left, #0d0b3c 0%, #a4d4e6 100%);
+       
+        height: 300px;
+        /*background-image: -ms-linear-gradient(left, #0d0b3c 0%, #a4d4e6 100%);
         background-image: -o-linear-gradient(left, #0d0b3c 0%, #a4d4e6 100%);
         background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #0d0b3c), color-stop(1, #a4d4e6));
         background-image: -webkit-linear-gradient(left, #0d0b3c 0%, #a4d4e6 100%);
-        background-image: linear-gradient(left, #0d0b3c 0%, #a4d4e6 100%);
+        background-image: linear-gradient(left, #0d0b3c 0%, #a4d4e6 100%);*/
+        /*background-image: url(../Images/weightlifting-wallpapers.jpg);*/
         color: #fff;
         padding: 20px 40px 30px 40px;
     }
@@ -232,9 +274,9 @@ ul#menu {
             color: #fff;
         }
 
-        .featured p {
-            font-size: 1.1em;
-        }
+        /*.featured p {
+            /*font-size: 1.1em;
+        }*/
 
 /* page titles */
 hgroup.title {
@@ -242,7 +284,7 @@ hgroup.title {
 }
 
 hgroup.title h1, hgroup.title h2 {
-    display: inline;
+    display:inline-table;
 }
 
 hgroup.title h2 {
@@ -434,7 +476,6 @@ label.checkbox {
 
 input, textarea {
     border: 1px solid #e2e2e2;
-    background: #fff;
     color: #333;
     font-size: 1.2em;
     margin: 5px 0 6px 0;
@@ -654,11 +695,17 @@ tr.pager td {
         margin: 0;
         padding: 0;
         text-align: center;
+          position: absolute;
+    left: 0;
+    bottom: 0;
     }
 
         ul#menu li {
             margin: 0;
             padding: 0;
+               position: absolute;
+    left: 0;
+    bottom: 0;
         }
 
 

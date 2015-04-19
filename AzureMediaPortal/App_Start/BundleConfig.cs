@@ -9,10 +9,10 @@ namespace AzureMediaPortal
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-2.1.3.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                        "~/Scripts/jquery-ui-1.8.24.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
@@ -25,7 +25,7 @@ namespace AzureMediaPortal
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/zocial.css",
-                "~/Content/site.css",
+                "~/Content/Site.css",
                 "~/Content/playerframework.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(

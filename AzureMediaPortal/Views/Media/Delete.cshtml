@@ -4,6 +4,18 @@
     ViewBag.Title = "Delete";
 }
 <h2>Delete</h2>
+<nav>
+    <ul id="menu" style="float:right;">
+        <section id="login">
+            @Html.Partial("_LoginPartial")
+        </section>
+        <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+        <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
+        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+    </ul>
+</nav>
+<br>
 <h3>Are you sure you want to delete this?</h3>
 <fieldset>
     <legend>Media Element</legend>

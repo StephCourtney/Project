@@ -4,7 +4,20 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Edit Details</h2>
+
+<nav>
+    <ul id="menu" style="float:right;">
+        <section id="login">
+            @Html.Partial("_LoginPartial")
+        </section>
+        <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+        <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
+        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+    </ul>
+</nav>
+<br>
 
 @using (Html.BeginForm())
 {
@@ -18,6 +31,7 @@
         @Html.HiddenFor(model => model.AssetId)
         @Html.HiddenFor(model => model.FileUrl, new { id = "fileUrl" })
         @Html.HiddenFor(model => model.UserId)
+      
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Title)
@@ -25,6 +39,13 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Title)
             @Html.ValidationMessageFor(model => model.Title)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.UploadTime)
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.UploadTime, new { @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.UploadTime) <i>*Non-editable</i>
         </div>
 
         <div class="editor-label">

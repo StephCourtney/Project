@@ -5,7 +5,18 @@
 }
 
 <h2>Your Comments</h2>
-
+<nav>
+    <ul id="menu" style="float:right;">
+        <section id="login">
+            @Html.Partial("_LoginPartial")
+        </section>
+        <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+        <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
+        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+    </ul>
+</nav>
+<br>
 <table>
     <tr>
         <th>
