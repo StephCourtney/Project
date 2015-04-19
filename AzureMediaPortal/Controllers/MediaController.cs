@@ -5,6 +5,8 @@ using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using System;
+using PagedList;
+using PagedList.Mvc;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -39,9 +41,9 @@ namespace AzureMediaPortal.Controllers
         // has been entered and on first load.
         // Ordered by title A-Z
         [HttpGet]
-        public ActionResult PublicVideos() 
+        public ActionResult PublicVideos(int page = 1) 
         {
-           var v = db.MediaElements.OrderBy(t => t.Title).Where(m => m.IsPublic.Equals(true)).ToList();
+            var v = db.MediaElements.OrderBy(t => t.Title).Where(m => m.IsPublic.Equals(true)).ToPagedList(page, 4);
            return View(v);
         }
         // POST: Media/PublicVideos
@@ -57,8 +59,8 @@ namespace AzureMediaPortal.Controllers
             }
             else 
             {
-                videos = db.MediaElements.Where(v => v.Title.StartsWith(SearchString) && v.IsPublic.Equals(true)).ToList();
-           
+                videos = db.MediaElements.Where(v => v.Title.Contains(SearchString) && v.IsPublic.Equals(true)).ToList();
+
             }
             return View(videos);
         }
