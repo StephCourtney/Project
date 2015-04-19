@@ -94,28 +94,6 @@ namespace AzureMediaPortal.Controllers
         //}
         
 
-        // POST: /Media/Create
-        // Save the new media element to the database
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize]
-        //public ActionResult Create(MediaElement mediaelement)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        mediaelement.UserId = User.Identity.Name;
-        //        db.MediaElements.Add(mediaelement);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(mediaelement);
-        //}
-
-        // POST: 
-        // Create a new posts section for the video,
-        // add the time and streamingurl information to the mediaelement
-        // save the mediaelement to the database
-        // return saved to the screen on successful save
         [Authorize]
         [HttpPost]
         public JsonResult Save(MediaElement mediaelement)

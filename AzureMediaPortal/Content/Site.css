@@ -23,7 +23,7 @@ a {
 
     a:link, a:visited,
     a:active, a:hover {
-        color: khaki;
+        color: #34C9CA;
     }
 
     a.videoLink
@@ -639,7 +639,7 @@ tr.pager td {
 /********************
 *   Mobile Styles   *
 ********************/
-@media only screen and (max-width: 850px) {
+@media only screen and () {
 
     /* header
     ----------------------------------------------------------*/
@@ -726,6 +726,8 @@ tr.pager td {
     }
 
     /* page content */
+
+  
     article, aside {
         float: none;
         width: 100%;
@@ -816,6 +818,10 @@ tr.pager td {
     width:35px; 
     height:35px;
 }
+
+  .links {
+        color: #999;
+    }
 
 
 

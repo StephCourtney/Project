@@ -37,8 +37,15 @@
         <td>
             <b>@Html.ActionLink(@item.Title, "Edit", new { id = item.Id }, new { @class = "videoLink" })</b>
             <i>@Html.Label("Uploaded: " + @item.UploadTime)</i>
-            Viewable to Public: @Html.DisplayFor(model => item.IsPublic)
-           <br> @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteLink" })
+             @if (item.IsPublic) 
+              {
+                <p style="color: #089041">Viewable to Public</p>
+             }
+             else {
+                <p>Hidden from Public</p>
+             }
+           
+           @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteLink" })
         </td>
         
     </tr>
