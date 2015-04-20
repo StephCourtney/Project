@@ -14,6 +14,7 @@ namespace AzureMediaPortal.Models
         public string VideoTitle { get; set; }
         public int VideoID { get; set; }
         public string UserID { get; set; }
+        [Required]
         [Display(Name="Comment ")]
         public string MessageBody { get; set; }
         public string CommentTime {get; set;}

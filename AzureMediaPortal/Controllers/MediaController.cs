@@ -53,41 +53,12 @@ namespace AzureMediaPortal.Controllers {
                 videos = db.MediaElements.Where(m => m.IsPublic.Equals(true)).OrderBy(t => t.Title).ToPagedList(page, 4); 
             }
             else {
-                videos = db.MediaElements.Where(v => v.Title.Contains(SearchString) && v.IsPublic.Equals(true)).OrderBy(t => t.Title).ToPagedList(page, 4);
-                
+                videos = db.MediaElements.Where(v => v.Title.Contains(SearchString) && v.IsPublic.Equals(true)).OrderBy(t => t.Title).ToPagedList(page, 4); 
             }
+           
             return View(videos);
         }
 
-        // TODO: Get list to display in search box
-        // Attempted Autocomplete search box
-        // Used for search box autocomplete
-        // currently returning data from endpoint but not displaying in textbox
-        //public JsonResult GetSearchList(string term) {
-        //    List<string> videos;
-        //    videos = db.MediaElements.Where(v => v.Title.StartsWith(term) && v.IsPublic.Equals(true))
-        //        .Select(n => n.Title).ToList();
-        //    return Json(videos, JsonRequestBehavior.AllowGet);
-        //}
-
-        //public ActionResult sortSelector(int term) 
-        //{
-        //    List<string> selections = new List<string>();
-        //    selections.Add("By Date Uploaded");
-        //    List<MediaElement> videos = new List<MediaElement>();
-        //    if (term == 0) 
-        //    {
-
-        //        videos = db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList();
-        //    }
-        //    else if(term == 1)
-        //    {
-        //        videos = db.MediaElements.OrderBy(v => v.UserId).Where(m => m.IsPublic.Equals(true)).ToList();
-
-        //    }
-
-        //    return View(videos);
-        //}
 
         // Add the userID, upload time and url to the mediaelement for saving to the db
         // create a new list of posts for the comments section of the mediaelement
@@ -171,7 +142,6 @@ namespace AzureMediaPortal.Controllers {
 
 
         // POST: 
-        // Saves comments to the db including the time and loads the 
         // selected video based on the id
         // Tuple used here to display both the mediaelement and post
         // properties in the one view
@@ -191,6 +161,8 @@ namespace AzureMediaPortal.Controllers {
             return View(Tuple.Create(view1, view2));
         }
 
+        // Save comments to the db including the 
+        // userid and time
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -215,7 +187,6 @@ namespace AzureMediaPortal.Controllers {
 
 
         // POST: /Media/Edit/5
-        // TODO: add string to post object, save to db
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -230,7 +201,7 @@ namespace AzureMediaPortal.Controllers {
 
 
         // GET: /Media/Delete/5
-        //Delete the element
+        // returns delete view
         [Authorize]
         public ActionResult Delete(int id = 0) {
             MediaElement mediaelement = db.MediaElements.Find(id);
@@ -243,7 +214,8 @@ namespace AzureMediaPortal.Controllers {
 
 
         // POST: /Media/Delete/5
-        //Delete from database
+        // Delete from database, must delete posts first,
+        // if not then foreign key violation error is displayed
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -262,6 +234,8 @@ namespace AzureMediaPortal.Controllers {
             return RedirectToAction("Index");
         }
 
+        // Delete asset from mediaservices account
+        // called in DeleteConfirmed above
         [Authorize]
         private void DeleteMedia(string assetId) {
             string mediaAccountName = ConfigurationManager.AppSettings["MediaAccountName"];
@@ -279,11 +253,12 @@ namespace AzureMediaPortal.Controllers {
             return View();
         }
 
-        //get metadata, create temporary storage 
+        // Find the temporary-media container in blob storage, create it if
+        // it doesn't exist
+        // save current state in session to use in commit
         [Authorize]
         [HttpPost]
         public ActionResult SetMetadata(int blocksCount, string fileName, long fileSize) {
-            //remove hardcoded value at later stage
             var container = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=fitvidsblob;AccountKey=XeSJX2R51EB2UIGdIGs4ckoibI3/9tnSBCaF8QfLouZ2fAtjbJS+pPoApJE9+k0cpCeFXfw2ImdqwOF+kovIUQ==");
             var cb = container.CreateCloudBlobClient().GetContainerReference("temporary-media");
             cb.CreateIfNotExists();
