@@ -34,6 +34,10 @@ var beginUpload = function ()
     }
 }
 
+// Called when "Save" button is pressed on UI
+// waits for JsonResult from mediacontroller
+// if the save was successful, the title is added and "Saved Successfully"
+// is displayed along with the video. if not then "Saved failed" is displayed
 var saveDetails = function ()
 {
     var dataPost = {
