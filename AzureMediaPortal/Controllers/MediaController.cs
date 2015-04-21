@@ -171,7 +171,8 @@ namespace AzureMediaPortal.Controllers {
                 post.UserID = User.Identity.Name;
                 post.VideoID = media.Id;
                 post.VideoTitle = VideoTitle(media.Id);
-                post.CommentTime = DateTime.Now.ToString("HH:mm, dd MMM yy");
+                DateTime CommentTime = DateTime.Now;
+                post.CommentTime = CommentTime.AddHours(1.00).ToString("HH:mm, dd MMM yy");
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("PublicVideoPlayback");
@@ -253,9 +254,11 @@ namespace AzureMediaPortal.Controllers {
             return View();
         }
 
-        // Find the temporary-media container in blob storage, create it if
-        // it doesn't exist
-        // save current state in session to use in commit
+        // sets up the Meta Information about the file 
+        // includes the file name, its size, number of blocks it’s being broken into and the reference for it in the Storage Blob
+        // It also stores the starting time. 
+        // Once done it sends back Json with the value true indicating Metadata was accepted and upload can commence.
+        // saves the information in a session so it can be used later when upload starts
         [Authorize]
         [HttpPost]
         public ActionResult SetMetadata(int blocksCount, string fileName, long fileSize) {
@@ -275,7 +278,9 @@ namespace AzureMediaPortal.Controllers {
             return Json(true);
         }
 
-        //upload video in chunks
+        // receives the Chunk from the client along with the Slice of file that needs to be uploaded in the Request.
+        // after the chunk is recieved, it is sent to uploadcurrentchunk
+        // when uploadcurrentchunks has completed, commitallchunks is called
         [Authorize]
         [HttpPost]
         [ValidateInput(false)]
@@ -286,6 +291,7 @@ namespace AzureMediaPortal.Controllers {
             JsonResult returnData = null;
             string fileSession = "CurrentFile";
             if (Session[fileSession] != null) {
+                // set the cloudfile metadata stored in the session to a new cloadfile
                 CloudFile model = (CloudFile)Session[fileSession];
                 returnData = UploadCurrentChunk(model, chunk, id);
                 if (returnData != null) {
@@ -307,15 +313,21 @@ namespace AzureMediaPortal.Controllers {
             return Json(new { error = false, isLastBlock = false, message = string.Empty });
         }
 
-        //commit chunks to asset and encode for streaming
+        // takes all the seperate blocks that have uploaded and puts them in the one blob
+        // this is done by creating an enumerable of all the blocks and using putblocklist 
+        // to move them to the one blob
+        // time taken to upload and the size of the file is returned to the client with a success message
         [Authorize]
         private ActionResult CommitAllChunks(CloudFile model) {
             model.IsUploadCompleted = true;
             bool errorInOperation = false;
             try {
+                // enumerable to hold all blocks
                 var blockList = Enumerable.Range(1, (int)model.BlockCount).ToList<int>().ConvertAll(rangeElement =>
                             Convert.ToBase64String(Encoding.UTF8.GetBytes(
                                 string.Format(CultureInfo.InvariantCulture, "{0:D4}", rangeElement))));
+
+                // store them in the one blob
                 model.BlockBlob.PutBlockList(blockList);
                 var duration = DateTime.Now - model.StartTime;
                 float fileSizeInKb = model.Size / 1024;
@@ -341,11 +353,15 @@ namespace AzureMediaPortal.Controllers {
             });
         }
 
+        // session data is used here and uploaded along with the chunk that has been passed in
+        // chunked byte stream is uploaded as a Block using the PutBlock method
+        // the putblock method commits a new block, all blocks make up the blob
+        // a retry policy is used here, if upload fails, it waits 10 seconds and retries
+        // theis is done 3 times, if it still fails, the exception is sent back to the screen
         [Authorize]
         private JsonResult UploadCurrentChunk(CloudFile model, byte[] chunk, int id) {
             using (var chunkStream = new MemoryStream(chunk)) {
-                var blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(
-                        string.Format(CultureInfo.InvariantCulture, "{0:D4}", id)));
+                var blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Format(CultureInfo.InvariantCulture, "{0:D4}", id)));
                 try {
                     model.BlockBlob.PutBlock(
                         blockId,

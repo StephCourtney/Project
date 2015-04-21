@@ -1,7 +1,9 @@
 ﻿/// <reference path="jquery-1.8.2.js" />
 /// <reference path="_references.js" />
 
+
 var maxRetries = 3;
+// 1 mb
 var blockLength = 1048576;
 var numberOfBlocks = 1;
 var currentChunk = 1;
@@ -22,6 +24,9 @@ $(document).ready(function () {
     });
 });
 
+// gets the selected file to be uploaded, when it is found
+// it calls the uploadmedadata function which calculates
+// how many chunks will be uploaded based on a 1mb chunk size
 var beginUpload = function ()
 {
     var fileControl = document.getElementById("selectFile");
@@ -65,6 +70,8 @@ var saveDetails = function ()
     });
 }
 
+// uploads metadata
+// also uploads video file when sendfile is called
 var uploadMetaData = function (file, index)
 {
     var size = file.size;
@@ -93,6 +100,7 @@ var uploadMetaData = function (file, index)
 
 }
 
+// uploadchunk
 var sendFile = function (file, chunkSize)
 {
     var start = 0,
@@ -196,6 +204,8 @@ var updateProgress = function () {
         $("#progressBar").progressbar({
             value: parseInt(progress)
         });
+        $("#progressBar").css({ 'background': '#dff4e0' });
+        $("#progressBar > div").css({ 'background': '#11db3d' });
 
         displayStatusMessage("Uploaded " + parseInt(progress) + "%");
     }

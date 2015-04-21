@@ -9,13 +9,11 @@
         </section>
         <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
         <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
-        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
-        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+        <li>@Html.ActionLink("About", "Index", "Home")</li>
     </ul>
 </nav>
 <br>
-@using (Html.BeginForm())
-{
+@using (Html.BeginForm()) {
     <fieldset>
         <legend>Media Element</legend>
 
@@ -25,15 +23,15 @@
         <div class="editor-field">
             <input type="file" id="selectFile" value=" " />
             <input type="button" id="fileUpload" name="fileUpload" value="Upload" />
-            
+
         </div>
-        
-        <div id="progressBar" style="width: 50%; height: 20px; background-color: grey" class="ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+
+        <div id="progressBar" style="width: 50%; height: 20px;" class="ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         </div>
-           
+
         <br />
-            <label id="statusMessage"></label>
-    <br />
+        <label id="statusMessage"></label>
+        <br />
     </fieldset>
 }
 <div id="detailsPanel">
