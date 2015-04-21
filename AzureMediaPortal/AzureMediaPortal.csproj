@@ -227,7 +227,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AzureMediaPortalContext.cs" />
     <Compile Include="Models\MediaElement.cs" />
-    <Compile Include="Models\MediaFile.cs" />
+    <Compile Include="Models\CloudFile.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

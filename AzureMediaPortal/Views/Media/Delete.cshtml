@@ -11,8 +11,7 @@
         </section>
         <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
         <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
-        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
-        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+        <li>@Html.ActionLink("About", "Index", "Home")</li>
     </ul>
 </nav>
 <br>
@@ -22,7 +21,7 @@
     @Html.HiddenFor(model => model.UserId)
     @Html.HiddenFor(model => model.FileUrl, new { id = "fileUrl" })
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Title)
+        @Html.DisplayNameFor(model => model.Title)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Title)
@@ -30,7 +29,7 @@
     <div id="videoPlayer"></div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.IsPublic)
+        @Html.DisplayNameFor(model => model.IsPublic)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.IsPublic)

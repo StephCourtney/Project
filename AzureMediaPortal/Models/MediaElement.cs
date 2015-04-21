@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
-namespace AzureMediaPortal.Models
-{
-    public class MediaElement
-    {
+namespace AzureMediaPortal.Models {
+    public class MediaElement {
         public int Id { get; set; }
         public string UserId { get; set; }
         [Display(Name = "Video Title")]
@@ -17,9 +12,9 @@ namespace AzureMediaPortal.Models
         public string AssetId { get; set; }
         [Display(Name = "Public")]
         public bool IsPublic { get; set; }
-        public int VideoID { get; set;}
+        public int VideoID { get; set; }
         [ForeignKey("VideoID")]
-        public List<Post> VideoPost {get; set;}
+        public List<Post> VideoPost { get; set; }
         [Display(Name = "Upload Time and Date")]
         public string UploadTime { get; set; }
     }

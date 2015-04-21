@@ -4,12 +4,10 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
-using System;
 using PagedList;
-using PagedList.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.IO;
@@ -48,14 +46,14 @@ namespace AzureMediaPortal.Controllers {
         // Ordered by title A-Z
         [HttpPost]
         public ActionResult PublicVideos(string SearchString, int page = 1) {
-            IPagedList<MediaElement> videos; 
+            IPagedList<MediaElement> videos;
             if (String.IsNullOrEmpty(SearchString)) {
-                videos = db.MediaElements.Where(m => m.IsPublic.Equals(true)).OrderBy(t => t.Title).ToPagedList(page, 4); 
+                videos = db.MediaElements.Where(m => m.IsPublic.Equals(true)).OrderBy(t => t.Title).ToPagedList(page, 4);
             }
             else {
-                videos = db.MediaElements.Where(v => v.Title.Contains(SearchString) && v.IsPublic.Equals(true)).OrderBy(t => t.Title).ToPagedList(page, 4); 
+                videos = db.MediaElements.Where(v => v.Title.Contains(SearchString) && v.IsPublic.Equals(true)).OrderBy(t => t.Title).ToPagedList(page, 4);
             }
-           
+
             return View(videos);
         }
 
@@ -109,7 +107,7 @@ namespace AzureMediaPortal.Controllers {
 
             // find the streaming manifest file and create a locator that will be part of the url
             var streamingAssetFile = assetFiles.Where(f => f.Name.ToLower().EndsWith("m3u8-aapl.ism")).FirstOrDefault();
-           
+
             // find the mp4 file and create a locator that will be used to access the video
             // the access policy is applied here as well
             streamingAssetFile = assetFiles.Where(f => f.Name.ToLower().EndsWith(".mp4")).FirstOrDefault();
@@ -259,6 +257,7 @@ namespace AzureMediaPortal.Controllers {
         // It also stores the starting time. 
         // Once done it sends back Json with the value true indicating Metadata was accepted and upload can commence.
         // saves the information in a session so it can be used later when upload starts
+        // creates storage container
         [Authorize]
         [HttpPost]
         public ActionResult SetMetadata(int blocksCount, string fileName, long fileSize) {
@@ -317,6 +316,7 @@ namespace AzureMediaPortal.Controllers {
         // this is done by creating an enumerable of all the blocks and using putblocklist 
         // to move them to the one blob
         // time taken to upload and the size of the file is returned to the client with a success message
+        // the CreateMediaAsset metod is called from here
         [Authorize]
         private ActionResult CommitAllChunks(CloudFile model) {
             model.IsUploadCompleted = true;
@@ -381,22 +381,29 @@ namespace AzureMediaPortal.Controllers {
             }
         }
 
-        //connect to azure and create an asset
+        // connect to azure and create an asset. This is necessary for 
+        // video delivery and for future encoding 
         [Authorize]
         private void CreateMediaAsset(CloudFile model) {
+            // get the account information
             string mediaAccountName = ConfigurationManager.AppSettings["MediaAccountName"];
             string mediaAccountKey = ConfigurationManager.AppSettings["MediaAccountKey"];
             string storageAccountName = ConfigurationManager.AppSettings["StorageAccountName"];
             string storageAccountKey = ConfigurationManager.AppSettings["StorageAccountKey"];
 
+            // create mediaservice context
             CloudMediaContext context = new CloudMediaContext(mediaAccountName, mediaAccountKey);
+
+            // create the storageaccount
             var storageAccount = new CloudStorageAccount(new StorageCredentials(storageAccountName, storageAccountKey), true);
             var cloudBlobClient = storageAccount.CreateCloudBlobClient();
+
+            // get the temporary container which holds the video
             var mediaBlobContainer = cloudBlobClient.GetContainerReference(cloudBlobClient.BaseUri + "temporary-media");
 
             mediaBlobContainer.CreateIfNotExists();
 
-            // Create a new asset.
+            // Create a new asset and locator
             IAsset asset = context.Assets.Create("NewAsset_" + Guid.NewGuid(), AssetCreationOptions.None);
             IAccessPolicy writePolicy = context.AccessPolicies.Create("writePolicy",
                 TimeSpan.FromMinutes(120), AccessPermissions.Write);
@@ -407,15 +414,16 @@ namespace AzureMediaPortal.Controllers {
             string assetContainerName = uploadUri.Segments[1];
             CloudBlobContainer assetContainer =
                 cloudBlobClient.GetContainerReference(assetContainerName);
-            string fileName = HttpUtility.UrlDecode(Path.GetFileName(model.BlockBlob.Uri.AbsoluteUri));
 
+            // get blob handle
+            string fileName = HttpUtility.UrlDecode(Path.GetFileName(model.BlockBlob.Uri.AbsoluteUri));
             var sourceCloudBlob = mediaBlobContainer.GetBlockBlobReference(fileName);
             sourceCloudBlob.FetchAttributes();
 
+            // start the copy from temporary media to new blob which is controlled by the media service
             if (sourceCloudBlob.Properties.Length > 0) {
                 IAssetFile assetFile = asset.AssetFiles.Create(fileName);
                 var destinationBlob = assetContainer.GetBlockBlobReference(fileName);
-
                 destinationBlob.DeleteIfExists();
                 destinationBlob.StartCopyFromBlob(sourceCloudBlob);
                 destinationBlob.FetchAttributes();

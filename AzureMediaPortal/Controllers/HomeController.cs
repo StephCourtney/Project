@@ -1,14 +1,8 @@
 ﻿using AzureMediaPortal.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
-namespace AzureMediaPortal.Controllers
-{
-    public class HomeController : Controller
-    {
+namespace AzureMediaPortal.Controllers {
+    public class HomeController : Controller {
         private AzureMediaPortalContext db = new AzureMediaPortalContext();
 
         public ActionResult Index() {
@@ -17,23 +11,5 @@ namespace AzureMediaPortal.Controllers
             return View();
         }
 
-        //public ActionResult Index() {
-        //    ViewBag.Message = "Login to upload and view your videos";
-        //    return View(db.MediaElements.Where(m => m.IsPublic.Equals(true)).ToList());
-        //}
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

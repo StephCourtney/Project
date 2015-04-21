@@ -13,14 +13,12 @@
         </section>
         <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
         <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
-        @*<li>@Html.ActionLink("Comments", "Index", "Comments")</li>*@
-        <li>@Html.ActionLink("About", "Index", "Home")</li><!--Home Controller-->
+        <li>@Html.ActionLink("About", "Index", "Home")
     </ul>
 </nav>
 <br>
 
-@using (Html.BeginForm())
-{
+@using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -31,7 +29,7 @@
         @Html.HiddenFor(model => model.AssetId)
         @Html.HiddenFor(model => model.FileUrl, new { id = "fileUrl" })
         @Html.HiddenFor(model => model.UserId)
-      
+
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Title)

@@ -6,51 +6,48 @@
 
 <h2>My Videos</h2>
 
-    <nav>
-        <ul id="menu" style="float:right;">
-            <section id="login">
-                @Html.Partial("_LoginPartial")
-            </section>
-            <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
-            <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
-            <li>@Html.ActionLink("About", "Index", "Home")</li>
-        </ul>
-    </nav>
-<br><p>The videos you have uploaded are displayed below. Please click on the video to edit details.</p> 
+<nav>
+    <ul id="menu" style="float:right;">
+        <section id="login">
+            @Html.Partial("_LoginPartial")
+        </section>
+        <li>@Html.ActionLink("Public Videos", "PublicVideos", "Media")</li>
+        <li>@Html.ActionLink("My Videos", "Index", "Media")</li>
+        <li>@Html.ActionLink("About", "Index", "Home")</li>
+    </ul>
+</nav>
+<br><p>The videos you have uploaded are displayed below. Please click on the video to edit details.</p>
 <br>
 <div style="float:right;">
-<form action="Upload">
-    <input type="image" title="Upload new video" src="~/Images/upload.png" style="border:none; width:40px; height:40px;" />
-</form> 
-    </div>
+    <form action="Upload">
+        <input type="image" title="Upload new video" src="~/Images/upload.png" style="border:none; width:40px; height:40px;" />
+    </form>
+</div>
 <table>
- 
-    
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(@item.Title, "Edit", new { id = item.Id }, new { @class = "videoPic" })
-        </td>
-        <td>
-           
-        </td>
-        <td>
-            <b>@Html.ActionLink(@item.Title, "Edit", new { id = item.Id }, new { @class = "videoLink" })</b>
-            <i>@Html.Label("Uploaded: " + @item.UploadTime)</i>
-             @if (item.IsPublic) 
-              {
-                <p style="color: #089041">Viewable to Public</p>
-             }
-             else {
-                <p>Hidden from Public</p>
-             }
-           
-           @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteLink" })
-        </td>
-        
-    </tr>
-}
+
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.ActionLink(@item.Title, "Edit", new { id = item.Id }, new { @class = "videoPic" })
+            </td>
+            <td></td>
+            <td>
+                <b>@Html.ActionLink(@item.Title, "Edit", new { id = item.Id }, new { @class = "videoLink" })</b>
+                <i>@Html.Label("Uploaded: " + @item.UploadTime)</i>
+                @if (item.IsPublic) {
+                    <p style="color: #089041">Viewable to Public</p>
+                }
+                else {
+                    <p>Hidden from Public</p>
+                }
+
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteLink" })
+            </td>
+
+        </tr>
+    }
 </table>
- 
+
 
 
